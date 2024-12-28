@@ -1,0 +1,23 @@
+services:
+    postgres:
+        container_name: postgres_db
+        image: postgres
+        environment:
+        volumes:
+        ports:
+            - 5432:5432
+        restart: always
+        network:
+            - db
+    backend:
+        image: spid-be
+        build:
+            context: ./SpidIntegration
+            dockerfile: Dockerfile
+        ports:
+            - 8080:8080
+        network:
+            - db
+            - fe
+        depends_on:
+            - postgres
