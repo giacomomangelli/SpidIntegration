@@ -1,6 +1,8 @@
-FROM openjdk:11-ea-28-jdk-slim
+FROM openjdk:8u111-jdk-alpine
 
-RUN wget https://download.oracle.com/java/21/latest/jdk-21_linux-aarch64_bin.tar.gz
+RUN apk add --no-cache wget
+
+RUN wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/java/21/latest/jdk-21_linux-aarch64_bin.tar.gz
 RUN tar xvf jdk-21_linux-aarch64_bin.tar.gz
 RUN rm -r -f ./jdk-21_linux-aarch64_bin.tar.gz
 RUN mv jdk-21*/ /spid-app

@@ -16,7 +16,8 @@ services:
             - db
 
     adminer:
-        image: adminer
+        image: adminer:latest
+        container_name: adminer
         restart: always
         ports:
             - '8084:8080'
@@ -24,7 +25,8 @@ services:
             - db
 
     backend:
-        image: spid-be
+        image: spid-be:latest
+        container_name: backend
         build:
             context: ./SpidIntegration
             dockerfile: Dockerfile
@@ -37,7 +39,8 @@ services:
             - postgres
 
     frontend:
-        image: spid-fe
+        image: spid-fe:latest
+        container_name: frontend
         build:
             context: ./spid-fe
             dockerfile: Dockerfile
