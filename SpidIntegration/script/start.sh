@@ -31,7 +31,9 @@ else
   echo "Directory '$java_directory' already exists."
 fi
 
-cp -r -f ./SpidIntegration.jar ./spid-deploy/jdk/jdk-21/
+mv ./spid-deploy/jdk/jdk-21*/ ./spid-deploy/jdk/jdk-21/
+
+cp -r -f ../target/SpidIntegration-0.0.1-SNAPSHOT.jar ./spid-deploy/jdk/jdk-21/
 
 chmod +x spid-deploy/jdk/jdk-21/bin/java
 

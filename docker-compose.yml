@@ -1,16 +1,19 @@
 services:
     postgres:
         container_name: postgres_db
-        image: postgres
+        image: postgres:12.22
         environment:
-            POSTGRES_PASSWORD: admin
-            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: spid_password
+            POSTGRES_USER: spid_user
+            POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+            POSTGRES_HOST_AUTH_METHOD: scram-sha-256
             POSTGRES_DB: spid
             PGDATA: /var/lib/postgresql/data/pgdata
         volumes:
             - ./docker/volume:/var/lib/postgresql/data
+            - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
-            - '5432:5432'
+            - '5433:5432'
         restart: always
         networks:
             - db
@@ -31,7 +34,7 @@ services:
             context: ./SpidIntegration
             dockerfile: Dockerfile
         ports:
-            - '8080:8080'
+            - '8087:8080'
         networks:
             - db
             - service

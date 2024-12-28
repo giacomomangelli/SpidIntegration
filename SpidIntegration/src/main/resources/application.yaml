@@ -3,9 +3,9 @@ spring:
     name: SpidIntegration
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/SPID #todo: change with docker env
-    username: admin
-    password: admin
+    url: jdbc:postgresql://postgres:5432/spid
+    username: spid_user
+    password: spid_password
   jpa:
     hibernate:
       ddl-auto: update
