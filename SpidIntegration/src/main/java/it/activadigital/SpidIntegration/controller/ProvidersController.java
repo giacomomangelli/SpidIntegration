@@ -1,5 +1,6 @@
 package it.activadigital.SpidIntegration.controller;
 
+import it.activadigital.SpidIntegration.RelyingPartyWrapper;
 import it.activadigital.SpidIntegration.controller.dto.ProvidersDto;
 import it.spid.cie.oidc.exception.OIDCException;
 import it.spid.cie.oidc.handler.RelyingPartyHandler;
@@ -14,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/idp")
 public class ProvidersController {
 
-    private RelyingPartyHandler relyingPartyHandler; //todo: capire come usare
+    private RelyingPartyWrapper relyingPartyWrapper;
 
     @GetMapping
     public ResponseEntity<ProvidersDto> getProviders() throws OIDCException {
         return ResponseEntity.ok(new ProvidersDto(
-                relyingPartyHandler.getProviderButtonInfos(OIDCProfile.SPID),
-                relyingPartyHandler.getProviderButtonInfos(OIDCProfile.CIE)
+                relyingPartyWrapper.getProviderButtonInfos(OIDCProfile.SPID),
+                relyingPartyWrapper.getProviderButtonInfos(OIDCProfile.CIE)
         ));
     }
 }
