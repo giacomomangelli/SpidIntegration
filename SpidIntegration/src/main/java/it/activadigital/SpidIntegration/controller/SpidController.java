@@ -1,6 +1,6 @@
 package it.activadigital.SpidIntegration.controller;
 
-import it.activadigital.SpidIntegration.RelyingPartyWrapper;
+import it.activadigital.SpidIntegration.wrapper.RelyingPartyWrapper;
 import it.spid.cie.oidc.callback.RelyingPartyLogoutCallback;
 import it.spid.cie.oidc.model.AuthnRequest;
 import it.spid.cie.oidc.model.AuthnToken;
@@ -42,8 +42,7 @@ public class SpidController {
             @RequestParam(required = false) String profile)
             throws Exception {
 
-        String url = relyingPartyWrapper.getAuthorizeURL(
-                provider, trustAnchor, redirectUri, scope, profile, prompt);
+        String url = relyingPartyWrapper.getAuthorizeURL(provider, trustAnchor, redirectUri, scope, profile, prompt);
 
         log.info("Starting Authn request to {}", url);
 

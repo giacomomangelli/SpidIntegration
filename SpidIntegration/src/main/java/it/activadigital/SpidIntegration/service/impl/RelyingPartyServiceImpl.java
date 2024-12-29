@@ -39,8 +39,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
             if (model.isPresent()) {
                 return model.get().toAuthnRequest();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -54,8 +53,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
             if (model != null) {
                 return model.toCachedEntityInfo();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -69,8 +67,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
             if (model != null && Objects.equals(entityType, model.getEntityType())) {
                 return model.toFederationEntity();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -84,8 +81,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
             if (model != null) {
                 return model.toFederationEntity();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new PersistenceException(e);
         }
         return null;
@@ -109,8 +105,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
                 EntityInfoModel trustAnchorModel = entityInfoRepository.fetchEntity(trustAnchor, trustAnchor);
                 return model.toTrustChain(trustAnchorModel);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -125,8 +120,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
                 EntityInfoModel trustAnchorModel = entityInfoRepository.fetchEntity(trustAnchor, trustAnchor);
                 return model.toTrustChain(trustAnchorModel);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -142,8 +136,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
                 result.add(model.toAuthnRequest());
             }
             return result;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -158,8 +151,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
                 result.add(model.toAuthnToken());
             }
             return result;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -174,8 +166,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
             }
             model = entityInfoRepository.save(model);
             return model.toCachedEntityInfo();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -190,8 +181,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
             }
             model = federationEntityRepository.save(model);
             return model.toFederationEntity();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -206,8 +196,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
             }
             model = authnRequestRepository.save(model);
             return model.toAuthnRequest();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -222,8 +211,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
             }
             model = authnTokenRepository.save(model);
             return model.toAuthnToken();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }
@@ -239,8 +227,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
             }
             model = trustChainRepository.save(model);
             return model.toTrustChain(trustAnchorModel);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new PersistenceException(e);
         }

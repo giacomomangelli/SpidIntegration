@@ -1,4 +1,4 @@
-package it.activadigital.SpidIntegration;
+package it.activadigital.SpidIntegration.wrapper;
 
 import it.activadigital.SpidIntegration.conf.OidcConfig;
 import it.activadigital.SpidIntegration.service.impl.RelyingPartyServiceImpl;
@@ -26,18 +26,15 @@ public class RelyingPartyWrapper {
 
     @Autowired
     private OidcConfig oidcConfig;
-
     @Autowired
     private RelyingPartyServiceImpl service;
-
     private RelyingPartyHandler relyingPartyHandler;
 
     public String getAuthorizeURL(
             String spidProvider, String trustAnchor, String redirectUri, String scope,
             String profile, String prompt)
             throws OIDCException {
-        return relyingPartyHandler.getAuthorizeURL(
-                spidProvider, trustAnchor, redirectUri, scope, profile, prompt);
+        return relyingPartyHandler.getAuthorizeURL(spidProvider, trustAnchor, redirectUri, scope, profile, prompt);
     }
 
     public List<ProviderButtonInfo> getProviderButtonInfos(OIDCProfile profile)

@@ -16,6 +16,13 @@ import java.util.*;
 @ConfigurationProperties(prefix = "oidc")
 public class OidcConfig extends BaseConfig {
 
+    private String defaultTrustAnchor;
+    private List<String> trustAnchors = new ArrayList<>();
+    private RelyingParty relyingParty = new RelyingParty();
+    private Hosts hosts = new Hosts();
+    private List<ProviderInfo> spidProviders = new ArrayList<>();
+    private List<ProviderInfo> cieProviders = new ArrayList<>();
+
     public Map<String, String> getIdentityProviders(OIDCProfile profile) {
         Map<String, String> result = new HashMap<>();
 
@@ -23,8 +30,7 @@ public class OidcConfig extends BaseConfig {
             for (ProviderInfo provider : cieProviders) {
                 result.put(provider.getSubject(), provider.getTrustAnchor());
             }
-        }
-        else if (OIDCProfile.SPID.equals(profile)) {
+        } else if (OIDCProfile.SPID.equals(profile)) {
             for (ProviderInfo provider : spidProviders) {
                 result.put(provider.getSubject(), provider.getTrustAnchor());
             }
@@ -45,13 +51,6 @@ public class OidcConfig extends BaseConfig {
 
         return json;
     }
-
-    private String defaultTrustAnchor;
-    private List<String> trustAnchors = new ArrayList<>();
-    private RelyingParty relyingParty = new RelyingParty();
-    private Hosts hosts = new Hosts();
-    private List<ProviderInfo> spidProviders = new ArrayList<>();
-    private List<ProviderInfo> cieProviders = new ArrayList<>();
 
     @Setter
     @Getter
@@ -89,6 +88,31 @@ public class OidcConfig extends BaseConfig {
     @Getter
     public static class RelyingParty {
 
+        private String applicationName;
+        private String applicationType;
+        private Set<String> contacts = new HashSet<>();
+        private Set<String> scope = new HashSet<>();
+        private String clientId;
+        private Set<String> redirectUris = new HashSet<>();
+        //private String jwk;
+        private String jwkFedFilePath;
+        private String jwkCoreFilePath;
+        //private String trustMarks;
+        private String trustMarksFilePath;
+
+        private String idTokenSignedResponseAlg;
+        private String userinfoSignedResponseAlg;
+        private String userinfoEncryptedResponseAlg;
+        private String userinfoEncryptedResponseEnc;
+        private String tokenEndpointAuthMethod;
+
+        private String federationResolveEndpoint;
+        private String organizationName;
+        private String homepageUri;
+        private String policyUri;
+        private String logoUri;
+        private Set<String> federationContacts = new HashSet<>();
+
         public Set<String> getContacts() {
             return Collections.unmodifiableSet(contacts);
         }
@@ -122,32 +146,6 @@ public class OidcConfig extends BaseConfig {
 
             return json;
         }
-
-        private String applicationName;
-        private String applicationType;
-        private Set<String> contacts = new HashSet<>();
-        private Set<String> scope = new HashSet<>();
-        private String clientId;
-        private Set<String> redirectUris = new HashSet<>();
-        //private String jwk;
-        private String jwkFedFilePath;
-        private String jwkCoreFilePath;
-        //private String trustMarks;
-        private String trustMarksFilePath;
-
-        private String idTokenSignedResponseAlg;
-        private String userinfoSignedResponseAlg;
-        private String userinfoEncryptedResponseAlg;
-        private String userinfoEncryptedResponseEnc;
-        private String tokenEndpointAuthMethod;
-
-        private String federationResolveEndpoint;
-        private String organizationName;
-        private String homepageUri;
-        private String policyUri;
-        private String logoUri;
-        private Set<String> federationContacts = new HashSet<>();
-
     }
 
 }
