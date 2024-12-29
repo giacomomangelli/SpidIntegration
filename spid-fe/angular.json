@@ -29,7 +29,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/app/asset/spid/js/spid-button.js",
+              "src/app/asset/spid/js/providers.js"
+            ]
           },
           "configurations": {
             "production": {
