@@ -48,8 +48,7 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
     }
 
     @Override
-    public CachedEntityInfo fetchEntityInfo(String subject, String issuer)
-            throws PersistenceException {
+    public CachedEntityInfo fetchEntityInfo(String subject, String issuer) throws PersistenceException {
         try {
             EntityInfoModel model = entityInfoRepository.fetchEntity(subject, issuer);
             if (model != null) {

@@ -1,5 +1,10 @@
 package it.activadigital.SpidIntegration.controller;
 
+import it.activadigital.SpidIntegration.RelyingPartyWrapper;
+import it.spid.cie.oidc.callback.RelyingPartyLogoutCallback;
+import it.spid.cie.oidc.model.AuthnRequest;
+import it.spid.cie.oidc.model.AuthnToken;
+import it.spid.cie.oidc.util.GetterUtil;
 import it.spid.cie.oidc.util.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -49,10 +54,8 @@ public class SpidController {
     }
 
     @GetMapping("/callback")
-    public RedirectView callback(
-            @RequestParam Map<String, String> params,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public RedirectView callback(@RequestParam Map<String, String> params,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         if (params.containsKey("error")) {
             String msg = new JSONObject(params).toString(2);
@@ -67,8 +70,7 @@ public class SpidController {
 
         JSONObject userInfo = relyingPartyWrapper.getUserInfo(state, code);
 
-        request.getSession().setAttribute(
-                "USER", relyingPartyWrapper.getUserKey(userInfo));
+        request.getSession().setAttribute("USER", relyingPartyWrapper.getUserKey(userInfo));
         request.getSession().setAttribute("USER_INFO", userInfo.toMap());
 
         return new RedirectView("echo_attributes");
