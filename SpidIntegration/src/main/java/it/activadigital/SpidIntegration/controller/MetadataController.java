@@ -22,7 +22,6 @@ public class MetadataController {
         return ResponseEntity.ok(dto);
     }
 
-
     @GetMapping
     public ResponseEntity<MetadataResponseDto> getMetadataCie(@RequestParam String clientId) {
         MetadataResponseDto dto = metadataService.getCieMetadata(clientId);

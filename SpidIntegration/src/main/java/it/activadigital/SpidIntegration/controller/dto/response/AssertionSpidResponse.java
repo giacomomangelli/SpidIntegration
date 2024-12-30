@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AssertionResponse {
+public class AssertionSpidResponse {
 
     private String esito;
     @JsonProperty(value = "provider_id")
     private String providerId;
     @JsonProperty(value = "attributi_utente")
-    private AttributiUtenteDto attributiUtente;
+    private AttributiUtenteSpidDto attributiUtente;
     @JsonProperty(value = "response_id")
     private String responseId;
     @JsonProperty(value = "info_tracciatura")

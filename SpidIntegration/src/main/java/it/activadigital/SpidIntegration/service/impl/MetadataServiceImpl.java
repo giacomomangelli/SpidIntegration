@@ -16,6 +16,7 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Override
     public MetadataResponseDto getSpidMetadata(String clientId) {
+        log.info("getSpidMetadata client id {}", clientId);
         ResponseEntity<MetadataResponseDto> responseDto = RestClient
                 .create()
                 .get()
@@ -31,6 +32,7 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Override
     public MetadataResponseDto getCieMetadata(String clientId) {
+        log.info("getCieMetadata client id {}", clientId);
         ResponseEntity<MetadataResponseDto> responseDto = RestClient
                 .create()
                 .get()

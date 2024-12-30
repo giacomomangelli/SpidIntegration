@@ -32,7 +32,7 @@ public class SpidController {
 
     @PostMapping("/assertionconsumer")
     public ResponseEntity<Void> postAssertionConsumer(@RequestParam String samlResponse) {
-        assertionService.checkAssertion(samlResponse);
+        assertionService.checkSpidAssertion(samlResponse);
         return ResponseEntity.ok().build();
     }
 

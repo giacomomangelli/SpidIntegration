@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttributiUtenteDto {
+public class AttributiUtenteSpidDto {
 
     private String spidCode;
     private String name;
