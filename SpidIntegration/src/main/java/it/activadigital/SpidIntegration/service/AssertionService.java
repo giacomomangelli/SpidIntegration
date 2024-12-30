@@ -1,4 +1,4 @@
 package it.activadigital.SpidIntegration.service;
 
-public interface UserService {
+public interface AssertionService {
 }
