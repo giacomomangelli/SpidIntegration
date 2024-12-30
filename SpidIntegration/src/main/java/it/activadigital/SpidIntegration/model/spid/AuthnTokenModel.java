@@ -57,7 +57,6 @@ public class AuthnTokenModel {
 
     public static AuthnTokenModel of(AuthnToken source) {
         AuthnTokenModel target = new AuthnTokenModel();
-
         target.setId(source.getStorageId());
         target.setCreated(source.getCreateDate());
         target.setModified(source.getModifiedDate());
@@ -71,7 +70,6 @@ public class AuthnTokenModel {
         target.setScope(source.getScope());
         target.setTokenType(source.getTokenType());
         target.setUserKey(source.getUserKey());
-
         return target;
     }
 
@@ -90,7 +88,6 @@ public class AuthnTokenModel {
 
     public AuthnToken toAuthnToken() {
         AuthnToken target = new AuthnToken();
-
         target.setStorageId(getStorageId());
         target.setCreateDate(getCreated());
         target.setModifiedDate(getModified());
@@ -104,7 +101,6 @@ public class AuthnTokenModel {
         target.setScope(getScope());
         target.setTokenType(getTokenType());
         target.setUserKey(getUserKey());
-
         return target;
     }
 
@@ -122,7 +118,6 @@ public class AuthnTokenModel {
         if (id != null && id > 0) {
             return String.valueOf(id);
         }
-
         return null;
     }
 

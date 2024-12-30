@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+declare var SPID: any;
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,15 @@ import {Component} from '@angular/core';
 })
 export class LoginComponent {
 
+
   constructor() {
+    console.log(SPID.providers);
+    SPID.init();
+  }
+
+
+
+  // constructor() {
     // let pr = SPID.providers
     //
     // let spid = SPID.init({
@@ -48,7 +57,6 @@ export class LoginComponent {
   //     protocol: "SAML",           // opzionale
   //     size: "small"               // opzionale
   //   });
+  // }
 
-
-  }
 }

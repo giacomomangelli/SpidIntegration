@@ -87,16 +87,6 @@ public class RelyingPartyServiceImpl implements PersistenceAdapter {
         return null;
     }
 
-	/*
-	@Override
-	public TrustChain fetchOIDCProvider(String subject, OIDCProfile profile)
-		throws PersistenceException {
-		logger.info("TODO fetchOIDCProvider");
-		// TODO Auto-generated method stub
-		return null;
-	}
-	*/
-
     @Override
     public TrustChain fetchTrustChain(String subject, String trustAnchor) throws PersistenceException {
         try {

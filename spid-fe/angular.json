@@ -30,8 +30,9 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/app/asset/spid/js/spid-button.js",
-              "src/app/asset/spid/js/providers.js"
+              "src/app/assets/spid/js/spid-button.js",
+              "src/app/assets/spid/js/providers.js",
+              "node_modules/spid-smart-button/dist/spid-button.min.js"
             ]
           },
           "configurations": {

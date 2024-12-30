@@ -74,8 +74,7 @@ public class TrustChainModel {
 	@Column(name = "type_", nullable = false)
 	private String type;
 
-	public static TrustChainModel of(
-		TrustChain source, EntityInfoModel trustAnchorModel) {
+	public static TrustChainModel of(TrustChain source, EntityInfoModel trustAnchorModel) {
 
 		TrustChainModel target = new TrustChainModel();
 
