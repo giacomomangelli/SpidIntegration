@@ -1,5 +1,6 @@
 package it.activadigital.SpidIntegration.controller;
 
+import it.activadigital.SpidIntegration.controller.dto.response.MetadataResponseDto;
 import it.activadigital.SpidIntegration.service.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ public class MetadataController {
     private MetadataService metadataService;
 
     @GetMapping
-    public ResponseEntity<Void> getMetadata(@RequestParam String clientId) {
-        metadataService.getMetadata(clientId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<MetadataResponseDto> getMetadata(@RequestParam String clientId) {
+        MetadataResponseDto dto = metadataService.getMetadata(clientId);
+        return ResponseEntity.ok(dto);
     }
 }

@@ -2,11 +2,9 @@ package it.activadigital.SpidIntegration.service.impl;
 
 import it.activadigital.SpidIntegration.controller.dto.request.AssertionRequestDto;
 import it.activadigital.SpidIntegration.controller.dto.response.AssertionResponse;
-import it.activadigital.SpidIntegration.controller.dto.response.MetadataResponseDto;
 import it.activadigital.SpidIntegration.enumeration.Constant;
 import it.activadigital.SpidIntegration.service.AssertionService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.XML;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,6 @@ import org.springframework.web.client.RestClientException;
 @Service
 @Slf4j
 public class AssertionServiceImpl implements AssertionService {
-
 
 
     @Override
