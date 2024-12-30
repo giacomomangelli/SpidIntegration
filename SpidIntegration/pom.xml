@@ -57,40 +57,18 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- JOSE + JWT -->
 		<dependency>
 			<groupId>com.nimbusds</groupId>
 			<artifactId>nimbus-jose-jwt</artifactId>
 			<version>9.37.2</version>
 		</dependency>
 
-		<!-- Simple JSON -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20231013</version>
 		</dependency>
 
-		<!-- SPID -->
-
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.security.extensions</groupId>-->
-<!--			<artifactId>spring-security-saml2-core</artifactId>-->
-<!--			<version>1.0.2.RELEASE</version>-->
-<!--		</dependency>-->
-
-		<dependency>
-			<groupId>it.spid.cie.oidc</groupId>
-			<artifactId>it.spid.cie.oidc.starter.kit</artifactId>
-			<version>1.0.3-SNAPSHOT</version>
-		</dependency>
-
-<!--		<dependency>-->
-<!--			<groupId>it.spid.cie.oidc</groupId>-->
-<!--			<artifactId>starter-kit-parent</artifactId>-->
-<!--			<version>1.0.3-SNAPSHOT</version>-->
-<!--		</dependency>-->
-<!--		-->
 		<!-- TEST -->
 
 		<dependency>

@@ -7,6 +7,6 @@ import it.activadigital.SpidIntegration.model.spid.AuthRequest;
 public interface SpidService {
 
     AuthRequestDto getAuthRequest(IdpRequestDto idpRequestDto);
-    void saveAuthRequest(AuthRequest authRequest);
+    AuthRequest saveAuthRequest(AuthRequest authRequest);
 
 }

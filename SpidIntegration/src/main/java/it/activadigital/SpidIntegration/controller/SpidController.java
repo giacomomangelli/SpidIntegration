@@ -4,7 +4,6 @@ import it.activadigital.SpidIntegration.controller.dto.request.IdpRequestDto;
 import it.activadigital.SpidIntegration.model.mapper.AuthRequestMapper;
 import it.activadigital.SpidIntegration.service.AssertionService;
 import it.activadigital.SpidIntegration.service.SpidService;
-import it.spid.cie.oidc.exception.OIDCException;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,10 @@ public class SpidController {
     private AssertionService assertionService;
 
     @GetMapping("/auth-request")
-    public ResponseEntity<Void> getAuthRequest(@RequestParam String clientId, @RequestParam String idp) throws OIDCException {
+    public ResponseEntity<IdpRequestDto> getAuthRequest(@RequestParam String clientId, @RequestParam String idp) {
         IdpRequestDto idpDto = new IdpRequestDto(clientId, idp);
         spidService.saveAuthRequest(AuthRequestMapper.dtoToModel(spidService.getAuthRequest(idpDto)));
-        //todo: ritornare valori a fe per redirect
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(idpDto);
     }
 
     @PostMapping("/assertionconsumer")

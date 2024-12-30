@@ -37,9 +37,9 @@ public class SpidServiceImpl implements SpidService {
     }
 
     @Override
-    public void saveAuthRequest(AuthRequest authRequest) {
+    public AuthRequest saveAuthRequest(AuthRequest authRequest) {
         log.info("saving authRequest: {}", authRequest);
-        authRequestRepository.save(authRequest);
+        return authRequestRepository.save(authRequest);
     }
 
 }
