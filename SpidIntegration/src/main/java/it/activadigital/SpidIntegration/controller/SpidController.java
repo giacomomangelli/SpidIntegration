@@ -1,6 +1,7 @@
 package it.activadigital.SpidIntegration.controller;
 
 import it.activadigital.SpidIntegration.controller.dto.request.IdpRequestDto;
+import it.activadigital.SpidIntegration.model.mapper.AuthRequestMapper;
 import it.activadigital.SpidIntegration.service.SpidService;
 import it.spid.cie.oidc.exception.OIDCException;
 import lombok.Builder;
@@ -24,7 +25,8 @@ public class SpidController {
     @GetMapping("/auth-request")
     public ResponseEntity<Void> getAuthRequest(@RequestParam String clientId, @RequestParam String idp) throws OIDCException {
         IdpRequestDto idpDto = new IdpRequestDto(clientId, idp);
-        spidService.getAuthRequest(idpDto);
+        spidService.saveAuthRequest(AuthRequestMapper.dtoToModel(spidService.getAuthRequest(idpDto)));
+        return ResponseEntity.ok().build();
     }
 
 }
