@@ -4,7 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum Constant {
-    BASE_URL("/base_url");
+    SPID_BASE_URL("https://authtest.soluzionipa.it/spid/"),
+    CIE_BASE_URL("https://authtest.soluzionipa.it/cie/"),;
 
     final String description;
 

@@ -4,6 +4,7 @@ import it.activadigital.SpidIntegration.controller.dto.response.MetadataResponse
 
 public interface MetadataService {
 
-    MetadataResponseDto getMetadata(String clientId);
+    MetadataResponseDto getSpidMetadata(String clientId);
+    MetadataResponseDto getCieMetadata(String clientId);
 
 }

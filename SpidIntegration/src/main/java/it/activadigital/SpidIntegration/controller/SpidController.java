@@ -1,5 +1,6 @@
 package it.activadigital.SpidIntegration.controller;
 
+import it.activadigital.SpidIntegration.controller.dto.request.AuthRequestDto;
 import it.activadigital.SpidIntegration.controller.dto.request.IdpRequestDto;
 import it.activadigital.SpidIntegration.model.mapper.AuthRequestMapper;
 import it.activadigital.SpidIntegration.service.AssertionService;
@@ -22,10 +23,11 @@ public class SpidController {
     private AssertionService assertionService;
 
     @GetMapping("/auth-request")
-    public ResponseEntity<IdpRequestDto> getAuthRequest(@RequestParam String clientId, @RequestParam String idp) {
+    public ResponseEntity<AuthRequestDto> getAuthRequest(@RequestParam String clientId, @RequestParam String idp) {
         IdpRequestDto idpDto = new IdpRequestDto(clientId, idp);
-        spidService.saveAuthRequest(AuthRequestMapper.dtoToModel(spidService.getAuthRequest(idpDto)));
-        return ResponseEntity.ok(idpDto);
+        AuthRequestDto responseDto = spidService.getAuthRequest(idpDto);
+        spidService.saveAuthRequest(AuthRequestMapper.dtoToModel(responseDto));
+        return ResponseEntity.ok(responseDto);
     }
 
     @PostMapping("/assertionconsumer")

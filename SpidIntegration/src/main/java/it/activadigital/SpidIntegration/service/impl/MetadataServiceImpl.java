@@ -1,6 +1,5 @@
 package it.activadigital.SpidIntegration.service.impl;
 
-import it.activadigital.SpidIntegration.controller.dto.request.AuthRequestDto;
 import it.activadigital.SpidIntegration.controller.dto.response.MetadataResponseDto;
 import it.activadigital.SpidIntegration.enumeration.Constant;
 import it.activadigital.SpidIntegration.service.MetadataService;
@@ -16,17 +15,33 @@ import org.springframework.web.client.RestClientException;
 public class MetadataServiceImpl implements MetadataService {
 
     @Override
-    public MetadataResponseDto getMetadata(String clientId) {
+    public MetadataResponseDto getSpidMetadata(String clientId) {
         ResponseEntity<MetadataResponseDto> responseDto = RestClient
                 .create()
                 .get()
-                .uri(Constant.BASE_URL.getDescription() + "/get_metadata?client_id=" + clientId)
+                .uri(Constant.SPID_BASE_URL.getDescription() + "/get_metadata?client_id=" + clientId)
                 .retrieve()
                 .toEntity(MetadataResponseDto.class);
         if (responseDto.getStatusCode() != HttpStatus.OK) {
-            log.error("getMetadata returned status code {}", responseDto.getStatusCode());
+            log.error("get Spid Metadata returned status code {}", responseDto.getStatusCode());
             throw new RestClientException("Error in response from metadata request: " + responseDto.getStatusCode());
         }
         return responseDto.getBody();
     }
+
+    @Override
+    public MetadataResponseDto getCieMetadata(String clientId) {
+        ResponseEntity<MetadataResponseDto> responseDto = RestClient
+                .create()
+                .get()
+                .uri(Constant.CIE_BASE_URL.getDescription() + "/get_metadata?client_id=" + clientId)
+                .retrieve()
+                .toEntity(MetadataResponseDto.class);
+        if (responseDto.getStatusCode() != HttpStatus.OK) {
+            log.error("get Cie Metadata returned status code {}", responseDto.getStatusCode());
+            throw new RestClientException("Error in response from metadata request: " + responseDto.getStatusCode());
+        }
+        return responseDto.getBody();
+    }
+
 }

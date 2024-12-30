@@ -15,4 +15,14 @@ public class AuthRequestMapper {
                 .build();
     }
 
+    public static AuthRequestDto modelToDto(AuthRequest authRequest) {
+        return new AuthRequestDto(
+                authRequest.getEsito(),
+                authRequest.getIssueIstant(),
+                authRequest.getUuid(),
+                authRequest.getB64RequestComp(),
+                authRequest.getSsoRequest()
+        );
+    }
+
 }

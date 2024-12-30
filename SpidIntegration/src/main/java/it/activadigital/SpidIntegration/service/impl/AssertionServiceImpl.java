@@ -15,20 +15,19 @@ import org.springframework.web.client.RestClientException;
 @Slf4j
 public class AssertionServiceImpl implements AssertionService {
 
-
     @Override
     public void checkAssertion(String xmlAuthResponse) {
         AssertionRequestDto request = new AssertionRequestDto("", xmlAuthResponse);
         ResponseEntity<AssertionResponse> responseDto = RestClient
                 .create()
                 .post()
-                .uri(Constant.BASE_URL.getDescription() + "/spid/check_assertion")
+                .uri(Constant.SPID_BASE_URL.getDescription() + "/spid/check_assertion")
                 .body(request)
                 .retrieve()
                 .toEntity(AssertionResponse.class);
         if (responseDto.getStatusCode() != HttpStatus.OK) {
-            log.error("getMetadata returned status code {}", responseDto.getStatusCode());
-            throw new RestClientException("Error in response from metadata request: " + responseDto.getStatusCode());
+            log.error("checkAssertion returned status code {}", responseDto.getStatusCode());
+            throw new RestClientException("Error in response from assertion request request: " + responseDto.getStatusCode());
         }
     }
 }

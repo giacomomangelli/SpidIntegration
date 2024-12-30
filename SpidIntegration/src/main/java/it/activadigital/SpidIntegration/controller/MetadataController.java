@@ -17,8 +17,17 @@ public class MetadataController {
     private MetadataService metadataService;
 
     @GetMapping
-    public ResponseEntity<MetadataResponseDto> getMetadata(@RequestParam String clientId) {
-        MetadataResponseDto dto = metadataService.getMetadata(clientId);
+    public ResponseEntity<MetadataResponseDto> getMetadataSpid(@RequestParam String clientId) {
+        MetadataResponseDto dto = metadataService.getSpidMetadata(clientId);
         return ResponseEntity.ok(dto);
     }
+
+
+    @GetMapping
+    public ResponseEntity<MetadataResponseDto> getMetadataCie(@RequestParam String clientId) {
+        MetadataResponseDto dto = metadataService.getCieMetadata(clientId);
+        return ResponseEntity.ok(dto);
+    }
+
+
 }
