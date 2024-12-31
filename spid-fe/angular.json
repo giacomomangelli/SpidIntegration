@@ -22,6 +22,11 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
+               "glob": "**/*",
+                "input": "src/app/assets/cie"
+              },
+
+              {
                 "glob": "**/*",
                 "input": "public"
               }
@@ -31,7 +36,6 @@
             ],
             "scripts": [
               "src/app/assets/spid/js/spid-button.js",
-              "src/app/assets/spid/js/providers.js",
               "node_modules/spid-smart-button/dist/spid-button.min.js"
             ]
           },
