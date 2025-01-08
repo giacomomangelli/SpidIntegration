@@ -3,6 +3,8 @@ package it.activadigital.SpidIntegration.service.impl;
 import it.activadigital.SpidIntegration.controller.dto.response.MetadataResponseDto;
 import it.activadigital.SpidIntegration.enumeration.Constant;
 import it.activadigital.SpidIntegration.service.MetadataService;
+import it.activadigital.SpidIntegration.util.RequestUtil;
+import jakarta.servlet.http.HttpServlet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,12 @@ import org.springframework.web.client.RestClientException;
 @Slf4j
 public class MetadataServiceImpl implements MetadataService {
 
+    private final HttpServlet httpServlet;
+
+    public MetadataServiceImpl(HttpServlet httpServlet) {
+        this.httpServlet = httpServlet;
+    }
+
     @Override
     public MetadataResponseDto getSpidMetadata(String clientId) {
         log.info("getSpidMetadata client id {}", clientId);
@@ -21,6 +29,9 @@ public class MetadataServiceImpl implements MetadataService {
                 .create()
                 .get()
                 .uri(Constant.SPID_BASE_URL.getDescription() + "/get_metadata?client_id=" + clientId)
+                .headers(httpHeaders -> {
+                    httpHeaders.addAll(RequestUtil.setHeaders());
+                })
                 .retrieve()
                 .toEntity(MetadataResponseDto.class);
         if (responseDto.getStatusCode() != HttpStatus.OK) {

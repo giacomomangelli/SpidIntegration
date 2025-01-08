@@ -6,6 +6,7 @@ import it.activadigital.SpidIntegration.enumeration.Constant;
 import it.activadigital.SpidIntegration.model.spid.AuthRequest;
 import it.activadigital.SpidIntegration.repository.AuthRequestRepository;
 import it.activadigital.SpidIntegration.service.SpidService;
+import it.activadigital.SpidIntegration.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,9 @@ public class SpidServiceImpl implements SpidService {
                 .create()
                 .get()
                 .uri(Constant.SPID_BASE_URL.getDescription() + "/get_auth_request?client_id=" + idpRequestDto.clientId() + "&idp=" + idpRequestDto.idp())
+                .headers(httpHeaders -> {
+                    httpHeaders.addAll(RequestUtil.setHeaders());
+                })
                 .retrieve()
                 .toEntity(AuthRequestDto.class);
         if (requestDto.getStatusCode() != HttpStatus.OK) {
