@@ -5,6 +5,7 @@ import it.activadigital.SpidIntegration.controller.dto.response.AssertionCieResp
 import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidResponse;
 import it.activadigital.SpidIntegration.enumeration.Constant;
 import it.activadigital.SpidIntegration.service.AssertionService;
+import it.activadigital.SpidIntegration.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +26,9 @@ public class AssertionServiceImpl implements AssertionService {
                 .create()
                 .post()
                 .uri(Constant.SPID_BASE_URL.getDescription() + "/check_assertion")
+                .headers(httpHeaders -> {
+                    httpHeaders.addAll(RequestUtil.setHeaders());
+                })
                 .body(request)
                 .retrieve()
                 .toEntity(AssertionSpidResponse.class);
@@ -42,6 +46,9 @@ public class AssertionServiceImpl implements AssertionService {
                 .create()
                 .post()
                 .uri(Constant.CIE_BASE_URL.getDescription() + "/check_assertion")
+                .headers(httpHeaders -> {
+                    httpHeaders.addAll(RequestUtil.setHeaders());
+                })
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(request)
                 .retrieve()

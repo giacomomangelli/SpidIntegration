@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SpidService} from '../../../service/spid.service';
+import {MetadataService} from '../../../service/metadata.service';
 
 declare var SPID: any;
 
@@ -11,7 +12,10 @@ declare var SPID: any;
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private spidService: SpidService) {
+  clientId: string = "" //da inserire per chiamata
+
+  constructor(private readonly spidService: SpidService,
+              private readonly metadataService: MetadataService) {
   }
 
 
@@ -54,9 +58,13 @@ export class LoginComponent implements OnInit {
       protocol: "SAML",           // opzionale
       size: "small"               // opzionale
     });
+
+    this.metadataService.getMetadata(this.clientId).subscribe(metadata => {
+      console.log(metadata);
+    });
   }
 
-  redirect() {
+  redirect() : void {
     this.spidService.redirectToIdp("")
   }
 }
