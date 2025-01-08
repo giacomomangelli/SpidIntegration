@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Slf4j
 @Builder
@@ -36,6 +38,13 @@ public class SpidController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/redirectWithRedirectView")
+    public RedirectView redirectWithUsingRedirectView(
+            RedirectAttributes attributes) {
+        attributes.addFlashAttribute("flashAttribute", "redirectWithRedirectView");
+        attributes.addAttribute("attribute", "redirectWithRedirectView");
+        return new RedirectView("www.google.it");
+    }
 }
 
 

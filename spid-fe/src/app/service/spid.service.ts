@@ -19,6 +19,7 @@ export class SpidService {
   }
 
   public redirectToIdp(ssoRequest: string) {
-    return
+    console.log('Redirect To Idp');
+    return this.http.get(`${this.BASE_URL}/redirectWithRedirectView`);
   }
 }

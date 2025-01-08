@@ -29,4 +29,5 @@ public class CieController {
         assertionService.checkCieAssertion(samlResponse);
         return ResponseEntity.ok().build();
     }
+
 }

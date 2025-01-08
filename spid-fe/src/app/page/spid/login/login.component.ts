@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {SpidService} from '../../../service/spid.service';
 
 declare var SPID: any;
 
@@ -9,6 +10,9 @@ declare var SPID: any;
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
+
+  constructor(private spidService: SpidService) {
+  }
 
 
   ngOnInit() {
@@ -52,4 +56,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  redirect() {
+    this.spidService.redirectToIdp("")
+  }
 }
