@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
               private readonly cieService: CieService) {
   }
 
-
   ngOnInit() {
     console.log(SPID.providers);
     SPID.init({
@@ -59,16 +58,11 @@ export class LoginComponent implements OnInit {
       size: "small"               // opzionale
     });
 
-    this.spidService.getMetadata(this.clientId).subscribe(metadata => {
-      console.log(metadata);
-    });
-    this.cieService.getMetadata(this.clientId).subscribe(metadata => {
-      console.log(metadata);
-    });
   }
 
   redirect(): void {
-    this.spidService.redirectToIdp("").subscribe(t => {
+    window.open("https://www.google.com", "_blank");
+    this.spidService.redirectTest().subscribe(t => {
       console.log(t);
     })
   }

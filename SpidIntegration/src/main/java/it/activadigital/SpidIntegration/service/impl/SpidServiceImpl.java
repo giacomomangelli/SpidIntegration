@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.servlet.ModelAndView;
 
 @Service
 @Slf4j
@@ -44,6 +45,12 @@ public class SpidServiceImpl implements SpidService {
     public AuthRequest saveAuthRequest(AuthRequest authRequest) {
         log.info("saving spid authRequest: {}", authRequest);
         return authRequestRepository.save(authRequest);
+    }
+
+    @Override
+    public void redirectToSSO(AuthRequestDto responseDto) {
+        new ModelAndView("redirect:" + responseDto.ssoRequest());
+
     }
 
 }

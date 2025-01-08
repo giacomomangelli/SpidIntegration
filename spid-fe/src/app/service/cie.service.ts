@@ -21,6 +21,11 @@ export class CieService {
 
   public getAuthRequest(clientId: string): Observable<any> {
     console.log('Get Auth Request');
-    return this.http.get(`${this.BASE_URL}?client_id=${clientId}`);
+    let obv = new Observable<any>();
+    this.getMetadata(clientId).subscribe(metadata => {
+      console.log(metadata);
+      obv = this.http.get(`${this.BASE_URL}?client_id=${clientId}`);
+    });
+    return obv;
   }
 }
