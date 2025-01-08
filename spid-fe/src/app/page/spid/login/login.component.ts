@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SpidService} from '../../../service/spid.service';
-import {MetadataService} from '../../../service/metadata.service';
+import {CieService} from '../../../service/cie.service';
 
 declare var SPID: any;
 
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   clientId: string = "" //da inserire per chiamata
 
   constructor(private readonly spidService: SpidService,
-              private readonly metadataService: MetadataService) {
+              private readonly cieService: CieService) {
   }
 
 
@@ -59,12 +59,17 @@ export class LoginComponent implements OnInit {
       size: "small"               // opzionale
     });
 
-    this.metadataService.getMetadata(this.clientId).subscribe(metadata => {
+    this.spidService.getMetadata(this.clientId).subscribe(metadata => {
+      console.log(metadata);
+    });
+    this.cieService.getMetadata(this.clientId).subscribe(metadata => {
       console.log(metadata);
     });
   }
 
-  redirect() : void {
-    this.spidService.redirectToIdp("")
+  redirect(): void {
+    this.spidService.redirectToIdp("").subscribe(t => {
+      console.log(t);
+    })
   }
 }

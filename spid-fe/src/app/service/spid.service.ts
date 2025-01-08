@@ -2,15 +2,21 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {Metadata} from '../model/metadata';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpidService {
 
-  BASE_URL = environment.url + 'spid/';
+  BASE_URL = environment.url + 'spid';
 
   constructor(private readonly http: HttpClient) {
+  }
+
+  public getMetadata(clientId: string): Observable<Metadata> {
+    console.log('Get Metadata');
+    return this.http.get<Metadata>(`${this.BASE_URL}/metadata?client_id=${clientId}`);
   }
 
   public getAuthRequest(clientId: string, idp: string): Observable<any> {

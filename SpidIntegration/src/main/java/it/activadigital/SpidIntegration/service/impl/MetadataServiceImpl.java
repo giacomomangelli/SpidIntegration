@@ -4,7 +4,6 @@ import it.activadigital.SpidIntegration.controller.dto.response.MetadataResponse
 import it.activadigital.SpidIntegration.enumeration.Constant;
 import it.activadigital.SpidIntegration.service.MetadataService;
 import it.activadigital.SpidIntegration.util.RequestUtil;
-import jakarta.servlet.http.HttpServlet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +15,6 @@ import org.springframework.web.client.RestClientException;
 @Slf4j
 public class MetadataServiceImpl implements MetadataService {
 
-    private final HttpServlet httpServlet;
-
-    public MetadataServiceImpl(HttpServlet httpServlet) {
-        this.httpServlet = httpServlet;
-    }
 
     @Override
     public MetadataResponseDto getSpidMetadata(String clientId) {
