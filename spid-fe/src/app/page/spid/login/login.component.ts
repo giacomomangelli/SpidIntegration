@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit {
   }
 
   redirect(): void {
-    window.open("https://www.google.com", "_blank");
     this.spidService.redirectTest().subscribe(t => {
       console.log(t);
     })

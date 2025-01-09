@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, retry, share, switchMap, take, timer} from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {AuthResponse, Metadata} from '../model/metadata';
 
@@ -32,11 +32,6 @@ export class SpidService {
       obv = this.getAuthRequest(clientId, idp);
     });
     return obv;
-  }
-
-  public redirectToIdp(ssoRequest: string) {
-    console.log('Redirect To Idp');
-    window.open(ssoRequest, "_blank");
   }
 
   public redirectTest() {
