@@ -19,7 +19,7 @@ import org.springframework.web.client.RestClientException;
 public class AssertionServiceImpl implements AssertionService {
 
     @Override
-    public void checkSpidAssertion(String xmlAuthResponse) {
+    public AssertionSpidResponse checkSpidAssertion(String xmlAuthResponse) {
         log.info("Check SpidAssertion xmlAuthResponse: {}", xmlAuthResponse);
         AssertionRequestDto request = new AssertionRequestDto("", xmlAuthResponse);
         ResponseEntity<AssertionSpidResponse> responseDto = RestClient
@@ -36,6 +36,7 @@ public class AssertionServiceImpl implements AssertionService {
             log.error("checkAssertion SPID returned status code {}", responseDto.getStatusCode());
             throw new RestClientException("Error in response from SPID assertion request request: " + responseDto.getStatusCode());
         }
+        return responseDto.getBody();
     }
 
     @Override

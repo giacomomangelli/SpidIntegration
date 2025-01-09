@@ -51,6 +51,7 @@ public class SpidServiceImpl implements SpidService {
     public void redirectToSSO(AuthRequestDto responseDto) {
         new ModelAndView("redirect:" + responseDto.ssoRequest());
 
+
     }
 
 }

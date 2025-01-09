@@ -1,7 +1,9 @@
 package it.activadigital.SpidIntegration.service;
 
+import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidResponse;
+
 public interface AssertionService {
 
-    void checkSpidAssertion(String xmlAuthResponse);
+    AssertionSpidResponse checkSpidAssertion(String xmlAuthResponse);
     void checkCieAssertion(String xmlAuthResponse);
 }
