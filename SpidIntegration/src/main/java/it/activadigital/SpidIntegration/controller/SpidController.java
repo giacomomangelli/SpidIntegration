@@ -8,11 +8,12 @@ import it.activadigital.SpidIntegration.service.AssertionService;
 import it.activadigital.SpidIntegration.service.MetadataService;
 import it.activadigital.SpidIntegration.service.SpidService;
 import it.activadigital.SpidIntegration.util.CallbackCheck;
+import it.activadigital.SpidIntegration.util.RequestUtil;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Call;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,8 @@ public class SpidController {
     @Autowired
     private MetadataService metadataService;
     @Autowired
+    private RequestUtil util;
+    @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -44,7 +47,8 @@ public class SpidController {
         IdpRequestDto idpDto = new IdpRequestDto(clientId, idp);
         AuthRequestDto responseDto = spidService.getAuthRequest(idpDto);
         spidService.saveAuthRequest(AuthRequestMapper.dtoToModel(responseDto));
-        spidService.redirectToSSO(responseDto);
+        spidService.redirectToSSO(null);
+        //wait -> trigger
         return ResponseEntity.ok(responseDto);
     }
 
@@ -58,8 +62,16 @@ public class SpidController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/redirectTest")
-    public void redirectTest() {
-        spidService.redirectToSSO(null);
+    public ResponseEntity<String> redirectTest() {
+//        spidService.redirectToSSO(null);
+        return ResponseEntity.status(HttpStatus.MOVED_TEMPORARILY).body("https://www.google.com");
+//        return ResponseEntity.ok().build();
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/generate-token")
+    public ResponseEntity<String> generateToken() {
+        return ResponseEntity.ok(util.generateToken());
     }
 }
 

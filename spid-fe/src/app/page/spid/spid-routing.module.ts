@@ -1,11 +1,16 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
+import {ChargingComponent} from './charging/charging.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'charging/:idp',
+    component: ChargingComponent,
   },
   {
     path: '**',
@@ -18,4 +23,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SpidRoutingModule { }
+export class SpidRoutingModule {
+}

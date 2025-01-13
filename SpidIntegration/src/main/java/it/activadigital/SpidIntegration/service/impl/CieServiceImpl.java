@@ -20,6 +20,8 @@ public class CieServiceImpl implements CieService {
 
     @Autowired
     private AuthRequestRepository authRequestRepository;
+    @Autowired
+    private RequestUtil util;
 
     @Override
     public AuthRequestDto getAuthRequest(String clientId) {
@@ -28,7 +30,7 @@ public class CieServiceImpl implements CieService {
                 .get()
                 .uri(Constant.SPID_BASE_URL.getDescription() + "/get_auth_request?client_id=" + clientId)
                 .headers(httpHeaders -> {
-                    httpHeaders.addAll(RequestUtil.setHeaders());
+                    httpHeaders.addAll(util.setHeaders());
                 })
                 .retrieve()
                 .toEntity(AuthRequestDto.class);

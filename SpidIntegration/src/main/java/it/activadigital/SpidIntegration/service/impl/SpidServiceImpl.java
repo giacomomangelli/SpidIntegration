@@ -22,6 +22,8 @@ public class SpidServiceImpl implements SpidService {
 
     @Autowired
     private AuthRequestRepository authRequestRepository;
+    @Autowired
+    private RequestUtil util;
 
     @Override
     public AuthRequestDto getAuthRequest(IdpRequestDto idpRequestDto) {
@@ -30,7 +32,7 @@ public class SpidServiceImpl implements SpidService {
                 .get()
                 .uri(Constant.SPID_BASE_URL.getDescription() + "/get_auth_request?client_id=" + idpRequestDto.clientId() + "&idp=" + idpRequestDto.idp())
                 .headers(httpHeaders -> {
-                    httpHeaders.addAll(RequestUtil.setHeaders());
+                    httpHeaders.addAll(util.setHeaders());
                 })
                 .retrieve()
                 .toEntity(AuthRequestDto.class);
@@ -48,10 +50,11 @@ public class SpidServiceImpl implements SpidService {
     }
 
     @Override
-    public void redirectToSSO(AuthRequestDto responseDto) {
-        new ModelAndView("redirect:" + responseDto.ssoRequest());
-
-
+    public ModelAndView redirectToSSO(AuthRequestDto responseDto) {
+//        new ModelAndView("redirect:" + responseDto.ssoRequest());
+        ModelAndView model =  new ModelAndView("forward:" + "https://www.google.it");
+        log.info(model.toString());
+        return model;
     }
 
 }

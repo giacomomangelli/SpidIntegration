@@ -16,7 +16,7 @@ export class CieService {
 
   public getMetadata(clientId: string): Observable<Metadata> {
     console.log('Get Metadata');
-    return this.http.get<Metadata>(`${this.BASE_URL}/metadata?client_id=${clientId}`);
+    return this.http.get<Metadata>(`${this.BASE_URL}/metadata?clientId=${clientId}`);
   }
 
   public getAuthRequest(clientId: string): Observable<any> {
@@ -24,7 +24,7 @@ export class CieService {
     let obv = new Observable<any>();
     this.getMetadata(clientId).subscribe(metadata => {
       console.log(metadata);
-      obv = this.http.get(`${this.BASE_URL}?client_id=${clientId}`);
+      obv = this.http.get(`${this.BASE_URL}?clientId=${clientId}`);
     });
     return obv;
   }

@@ -14,28 +14,27 @@ export class SpidService {
   constructor(private readonly http: HttpClient) {
   }
 
-  private getMetadata(clientId: string): Observable<Metadata> {
-    console.log('Get Metadata');
-    return this.http.get<Metadata>(`${this.BASE_URL}/metadata?client_id=${clientId}`);
+  public getMetadata(clientId: string): Observable<Metadata> {
+    console.log('Get Metadata for', clientId);
+    return this.http.get<Metadata>(`${this.BASE_URL}/metadata?clientId=${clientId}`);
   }
 
-  private getAuthRequest(clientId: string, idp: string): Observable<AuthResponse> {
+  public getAuthRequest(clientId: string, idp: string): Observable<AuthResponse> {
     console.log('Get Auth Request');
-    return this.http.get<AuthResponse>(`${this.BASE_URL}?client_id=${clientId}&idp=${idp}`);
+    return this.http.get<AuthResponse>(`${this.BASE_URL}?clientId=${clientId}&idp=${idp}`);
   }
 
-  public flowSSO(clientId: string, idp: string): Observable<any> {
+  public checkSessionArrived(clientId: string, idp: string): Observable<AuthResponse> {
     console.log('Get Auth Request');
     let obv = new Observable<any>();
+    console.log('obv1', obv);
     this.getMetadata(clientId).subscribe(metadata => {
       console.log(metadata);
       obv = this.getAuthRequest(clientId, idp);
+      console.log('obv2', obv);
     });
+    console.log('obv3', obv);
     return obv;
   }
 
-  public redirectTest() {
-    console.log('Redirect To Idp');
-    return this.http.get(`${this.BASE_URL}/redirectTest`);
-  }
 }

@@ -35,7 +35,6 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/app/assets/spid/js/spid-button.js",
               "node_modules/spid-smart-button/dist/spid-button.min.js"
             ]
           },

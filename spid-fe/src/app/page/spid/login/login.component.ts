@@ -1,68 +1,69 @@
 import {Component, OnInit} from '@angular/core';
 import {SpidService} from '../../../service/spid.service';
 import {CieService} from '../../../service/cie.service';
+import {environment} from '../../../../environments/environment';
+import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
 
 declare var SPID: any;
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [
+    FormsModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
 
-  clientId: string = "" //da inserire per chiamata
+  test = 'ciao';
 
   constructor(private readonly spidService: SpidService,
-              private readonly cieService: CieService) {
+              private readonly cieService: CieService,
+              private readonly router: Router,) {
   }
 
   ngOnInit() {
     console.log(SPID.providers);
     SPID.init({
-      lang: 'en',                   // opzionale
-      selector: '#my-spid-button',  // opzionale
-      method: 'POST',               // opzionale
-      url: '/Login/{{idp}}',
-      fieldName: 'idp',             // opzionale
-      extraFields: {                // opzionale
-        foo: 'bar',
-        baz: 'baz'
+      lang: 'it',
+      selector: '#my-spid-button',
+      method: "GET",
+      url: "http://localhost:4200/spid/charging/{{idp}}",
+      mapping: {
+        'https://loginspid.aruba.it': 'aruba',
+        'https://posteid.poste.it': 'poste',
+        'https://idp.namirialtsp.com/idp': 'tsp',
+        'https://identity.sieltecloud.it': 'sitelcloud',
+        'https://identity.infocert.it': 'infocert',
+        'https://login.id.tim.it/affwebservices/public/saml2sso': 'tim',
+        'https://spid.register.it': 'register',
+        'https://spid.intesa.it': 'intesa',
+        'https://id.lepida.it/idp/shibboleth' : 'lepida'
       },
-      mapping: {                    // opzionale
-        'https://loginspid.aruba.it': 4,
-        'https://posteid.poste.it': 5,
-        'https://idp.namirialtsp.com/idp': 7,
-      },
-      supported: [                  // obbligatorio
-        'https://identity.sieltecloud.it'
+      supported: [
+        'https://identity.sieltecloud.it',
+        'https://loginspid.aruba.it',
+        'https://posteid.poste.it',
+        'https://identity.infocert.it',
+        'https://login.id.tim.it/affwebservices/public/saml2sso',
+        'https://idp.namirialtsp.com/idp',
+        'https://spid.register.it',
+        'https://spid.intesa.it',
+        'https://id.lepida.it/idp/shibboleth'
       ],
-      extraProviders: [            // opzionale
-        {
-          "protocols": ["SAML"],
-          "entityName": "valore de IDP entity ID",
-          "logo": "spid-idp-aruba.svg",
-          "entityID": "https://loginciccio.it",
-          "active": true
-        },
-        {
-          "protocols": ["SAML"],
-          "entityName": "Foo bar ",
-          "logo": "spid-idp-infocertid.svg",
-          "entityID": "https://identity.pippocert.it",
-          "active": true
-        }
-      ],
-      protocol: "SAML",           // opzionale
-      size: "small"               // opzionale
     });
 
   }
 
-  redirect(): void {
-    this.spidService.redirectTest().subscribe(t => {
-      console.log(t);
+  cieConnect(): void {
+    this.cieService.getAuthRequest(environment.client_id).subscribe({
+      next: (response: any) => {},
+      error: err => {
+        console.log(err);
+      }
     })
   }
+
 }

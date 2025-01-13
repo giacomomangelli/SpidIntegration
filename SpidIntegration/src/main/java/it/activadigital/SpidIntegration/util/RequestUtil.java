@@ -3,16 +3,24 @@ package it.activadigital.SpidIntegration.util;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+
 @Slf4j
+@Component
 public class RequestUtil {
 
-    public static String generateToken() {
-        String secret = "";
+    @Value("${deda-client.secret}")
+    private String secret;
+
+    public String generateToken() {
         String jws = Jwts.builder()
-                .claim("start", "08012025143213")
+                .claim("start", Instant.now().getEpochSecond())
                 .claim("hash_assertion_consumer", createHashForSpid())
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
@@ -20,7 +28,7 @@ public class RequestUtil {
         return jws;
     }
 
-    public static MultiValueMap<String, String> setHeaders() {
+    public MultiValueMap<String, String> setHeaders() {
         MultiValueMap<String, String> multiHeaders = new LinkedMultiValueMap<>();
         multiHeaders.add("Authorization", "Bearer " + generateToken());
         multiHeaders.add("Accept", "application/json");
@@ -29,7 +37,7 @@ public class RequestUtil {
         return multiHeaders;
     }
 
-    public static String createHashForSpid() {
+    public String createHashForSpid() {
         return "";
     }
 }
