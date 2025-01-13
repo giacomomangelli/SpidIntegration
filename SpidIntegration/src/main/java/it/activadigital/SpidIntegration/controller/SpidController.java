@@ -1,6 +1,5 @@
 package it.activadigital.SpidIntegration.controller;
 
-import io.jsonwebtoken.lang.Assert;
 import it.activadigital.SpidIntegration.controller.dto.request.AuthRequestDto;
 import it.activadigital.SpidIntegration.controller.dto.request.IdpRequestDto;
 import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidResponse;
@@ -14,8 +13,6 @@ import it.activadigital.SpidIntegration.util.RequestUtil;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,20 +46,20 @@ public class SpidController {
         IdpRequestDto idpDto = new IdpRequestDto(clientId, idp);
         AuthRequestDto responseDto = spidService.getAuthRequest(idpDto);
         spidService.saveAuthRequest(AuthRequestMapper.dtoToModel(responseDto));
-        cacheService.setCachedData(responseDto.uuid(), new AssertionSpidResponse());
+        cacheService.setSpidCachedData(responseDto.uuid(), new AssertionSpidResponse());
         return ResponseEntity.ok(responseDto);
     }
 
     @PostMapping("/assertionconsumer")
     public ResponseEntity<Void> callbackAssertion(@RequestParam String samlResponse) {
         AssertionSpidResponse assertion = assertionService.checkSpidAssertion(samlResponse);
-        cacheService.setCachedData(assertion.getResponseId(), assertion);
+        cacheService.setSpidCachedData(assertion.getResponseId(), assertion);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/getAuthData")
     public ResponseEntity<AssertionSpidResponse> getAuthData(@RequestParam String uuid) {
-        AssertionSpidResponse assertion = cacheService.getCachedData(uuid);
+        AssertionSpidResponse assertion = cacheService.getSpidCachedData(uuid);
         if (assertion == null) {
             return ResponseEntity.notFound().build();
         }

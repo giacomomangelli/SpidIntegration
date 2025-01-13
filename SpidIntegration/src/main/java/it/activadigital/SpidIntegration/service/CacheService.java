@@ -1,9 +1,12 @@
 package it.activadigital.SpidIntegration.service;
 
+import it.activadigital.SpidIntegration.controller.dto.response.AssertionCieResponse;
 import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidResponse;
 
 public interface CacheService {
 
-    AssertionSpidResponse getCachedData(String key);
-    void setCachedData(String key, AssertionSpidResponse value);
+    AssertionSpidResponse getSpidCachedData(String key);
+    AssertionCieResponse getCieCachedData(String key);
+    void setSpidCachedData(String key, AssertionSpidResponse value);
+    void setCieCachedData(String key, AssertionCieResponse value);
 }

@@ -44,7 +44,7 @@ public class AssertionServiceImpl implements AssertionService {
     }
 
     @Override
-    public void checkCieAssertion(String xmlAuthResponse) {
+    public AssertionCieResponse checkCieAssertion(String xmlAuthResponse) {
         log.info("Check CieAssertion xmlAuthResponse: {}", xmlAuthResponse);
         AssertionRequestDto request = new AssertionRequestDto("", xmlAuthResponse);
         ResponseEntity<AssertionCieResponse> responseDto = RestClient
@@ -62,5 +62,6 @@ public class AssertionServiceImpl implements AssertionService {
             log.error("checkAssertion CIE returned status code {}", responseDto.getStatusCode());
             throw new RestClientException("Error in response from CIE assertion request request: " + responseDto.getStatusCode());
         }
+        return responseDto.getBody();
     }
 }

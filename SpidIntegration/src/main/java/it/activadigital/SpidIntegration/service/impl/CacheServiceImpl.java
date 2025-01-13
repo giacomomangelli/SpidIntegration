@@ -1,5 +1,6 @@
 package it.activadigital.SpidIntegration.service.impl;
 
+import it.activadigital.SpidIntegration.controller.dto.response.AssertionCieResponse;
 import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidResponse;
 import it.activadigital.SpidIntegration.service.CacheService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     @Cacheable("context")
-    public AssertionSpidResponse getCachedData(String key) {
+    public AssertionSpidResponse getSpidCachedData(String key) {
         if (cacheManager.getCache("context") != null) {
             var t = cacheManager.getCache("context").get(key);
             log.info("getCachedData: {}", t);
@@ -30,8 +31,28 @@ public class CacheServiceImpl implements CacheService {
     }
 
     @Override
+    public AssertionCieResponse getCieCachedData(String key) {
+        if (cacheManager.getCache("context") != null) {
+            var t = cacheManager.getCache("context").get(key);
+            log.info("getCachedData: {}", t);
+            if (t != null) {
+                return (AssertionCieResponse) t;
+            }
+        }
+        return null;
+    }
+
+    @Override
     @CachePut("context")
-    public void setCachedData(String key, AssertionSpidResponse value) {
+    public void setSpidCachedData(String key, AssertionSpidResponse value) {
+        if (cacheManager.getCache("context") != null) {
+            cacheManager.getCache("context").put(key, value);
+            log.info("setCachedData: {}", value);
+        }
+    }
+
+    @Override
+    public void setCieCachedData(String key, AssertionCieResponse value) {
         if (cacheManager.getCache("context") != null) {
             cacheManager.getCache("context").put(key, value);
             log.info("setCachedData: {}", value);
