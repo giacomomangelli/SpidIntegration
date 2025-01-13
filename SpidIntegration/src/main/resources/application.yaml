@@ -1,6 +1,10 @@
 spring:
   application:
     name: SpidIntegration
+  cache:
+    cache-names: "context"
+    caffeine:
+      spec: "maximumSize=1000,expireAfterAccess=900s"
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/spid
@@ -26,6 +30,7 @@ logging:
     root: info
     sql: info
     web: info
+    com.github.benmanes.caffeine.cache: info
 
 deda-client:
   secret: secret

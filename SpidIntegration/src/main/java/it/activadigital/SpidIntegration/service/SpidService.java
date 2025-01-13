@@ -9,5 +9,4 @@ public interface SpidService {
 
     AuthRequestDto getAuthRequest(IdpRequestDto idpRequestDto);
     AuthRequest saveAuthRequest(AuthRequest authRequest);
-    ModelAndView redirectToSSO(AuthRequestDto responseDto);
 }

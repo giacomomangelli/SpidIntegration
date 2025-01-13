@@ -2,14 +2,15 @@ package it.activadigital.SpidIntegration.util;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Slf4j
 @Component
@@ -39,5 +40,10 @@ public class RequestUtil {
 
     public String createHashForSpid() {
         return "";
+    }
+
+    @Cacheable(value = "json_response", key = "uuid")
+    public AssertionSpidResponse extractJsonResponse(String uuid, AssertionSpidResponse body) {
+        return body;
     }
 }

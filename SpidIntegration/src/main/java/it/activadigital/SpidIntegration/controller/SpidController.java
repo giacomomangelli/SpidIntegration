@@ -1,19 +1,21 @@
 package it.activadigital.SpidIntegration.controller;
 
+import io.jsonwebtoken.lang.Assert;
 import it.activadigital.SpidIntegration.controller.dto.request.AuthRequestDto;
 import it.activadigital.SpidIntegration.controller.dto.request.IdpRequestDto;
+import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidResponse;
 import it.activadigital.SpidIntegration.controller.dto.response.MetadataResponseDto;
 import it.activadigital.SpidIntegration.model.mapper.AuthRequestMapper;
 import it.activadigital.SpidIntegration.service.AssertionService;
+import it.activadigital.SpidIntegration.service.CacheService;
 import it.activadigital.SpidIntegration.service.MetadataService;
 import it.activadigital.SpidIntegration.service.SpidService;
-import it.activadigital.SpidIntegration.util.CallbackCheck;
 import it.activadigital.SpidIntegration.util.RequestUtil;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +34,7 @@ public class SpidController {
     @Autowired
     private RequestUtil util;
     @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+    private CacheService cacheService;
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/metadata")
@@ -47,25 +49,24 @@ public class SpidController {
         IdpRequestDto idpDto = new IdpRequestDto(clientId, idp);
         AuthRequestDto responseDto = spidService.getAuthRequest(idpDto);
         spidService.saveAuthRequest(AuthRequestMapper.dtoToModel(responseDto));
-        spidService.redirectToSSO(null);
-        //wait -> trigger
+        cacheService.setCachedData(responseDto.uuid(), new AssertionSpidResponse());
         return ResponseEntity.ok(responseDto);
     }
 
     @PostMapping("/assertionconsumer")
-    public ResponseEntity<Void> postAssertionConsumer(@RequestParam String samlResponse) {
-        var assertion = assertionService.checkSpidAssertion(samlResponse);
-        CallbackCheck springEvent = new CallbackCheck(this, "");
-        applicationEventPublisher.publishEvent(springEvent);
+    public ResponseEntity<Void> callbackAssertion(@RequestParam String samlResponse) {
+        AssertionSpidResponse assertion = assertionService.checkSpidAssertion(samlResponse);
+        cacheService.setCachedData(assertion.getResponseId(), assertion);
         return ResponseEntity.ok().build();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/redirectTest")
-    public ResponseEntity<String> redirectTest() {
-//        spidService.redirectToSSO(null);
-        return ResponseEntity.status(HttpStatus.MOVED_TEMPORARILY).body("https://www.google.com");
-//        return ResponseEntity.ok().build();
+    @GetMapping("/getAuthData")
+    public ResponseEntity<AssertionSpidResponse> getAuthData(@RequestParam String uuid) {
+        AssertionSpidResponse assertion = cacheService.getCachedData(uuid);
+        if (assertion == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(assertion);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")

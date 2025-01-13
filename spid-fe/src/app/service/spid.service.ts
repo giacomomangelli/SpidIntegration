@@ -27,13 +27,10 @@ export class SpidService {
   public checkSessionArrived(clientId: string, idp: string): Observable<AuthResponse> {
     console.log('Get Auth Request');
     let obv = new Observable<any>();
-    console.log('obv1', obv);
     this.getMetadata(clientId).subscribe(metadata => {
       console.log(metadata);
       obv = this.getAuthRequest(clientId, idp);
-      console.log('obv2', obv);
     });
-    console.log('obv3', obv);
     return obv;
   }
 

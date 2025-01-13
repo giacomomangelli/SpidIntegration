@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.servlet.ModelAndView;
 
 @Service
 @Slf4j
@@ -49,12 +48,5 @@ public class SpidServiceImpl implements SpidService {
         return authRequestRepository.save(authRequest);
     }
 
-    @Override
-    public ModelAndView redirectToSSO(AuthRequestDto responseDto) {
-//        new ModelAndView("redirect:" + responseDto.ssoRequest());
-        ModelAndView model =  new ModelAndView("forward:" + "https://www.google.it");
-        log.info(model.toString());
-        return model;
-    }
 
 }
