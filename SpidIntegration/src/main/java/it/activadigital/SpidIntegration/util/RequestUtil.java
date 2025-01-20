@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Component
@@ -21,7 +22,7 @@ public class RequestUtil {
 
     public String generateToken() {
         String jws = Jwts.builder()
-                .claim("start", Instant.now().getEpochSecond())
+                .claim("start", dateParser(LocalDateTime.now()))
                 .claim("hash_assertion_consumer", createHashForSpid())
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
@@ -38,8 +39,16 @@ public class RequestUtil {
         return multiHeaders;
     }
 
-    public String createHashForSpid() {
+    private String createHashForSpid() {
         return "";
+    }
+
+    private String dateParser(LocalDateTime date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formatDateTime = date.format(formatter);
+        String noDashDate = formatDateTime.replace("-", "");
+        String noColonDate = formatDateTime.replace(":", "");
+        return noColonDate.trim();
     }
 
     @Cacheable(value = "json_response", key = "uuid")
