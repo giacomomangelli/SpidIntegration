@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         'https://login.id.tim.it/affwebservices/public/saml2sso': 'tim',
         'https://spid.register.it': 'register',
         'https://spid.intesa.it': 'intesa',
-        'https://id.lepida.it/idp/shibboleth' : 'lepida'
+        'https://id.lepida.it/idp/shibboleth': 'lepida'
       },
       supported: [
         'https://identity.sieltecloud.it',
@@ -58,12 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   cieConnect(): void {
-    this.cieService.getAuthRequest(environment.client_id).subscribe({
-      next: (response: any) => {},
-      error: err => {
-        console.log(err);
-      }
-    })
+    this.router.navigate(['/spid/charging-cie']);
   }
 
 }

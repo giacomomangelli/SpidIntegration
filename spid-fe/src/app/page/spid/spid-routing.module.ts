@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
-import {ChargingComponent} from './charging/charging.component';
+import {ChargingSpidComponent} from './charging-spid/charging-spid.component';
+import {ChargingCieComponent} from './charging-cie/charging-cie.component';
 
 const routes: Routes = [
   {
@@ -9,8 +10,12 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'charging/:idp',
-    component: ChargingComponent,
+    path: 'charging-spid/:idp',
+    component: ChargingSpidComponent,
+  },
+  {
+    path: 'charging-cie',
+    component: ChargingCieComponent,
   },
   {
     path: '**',

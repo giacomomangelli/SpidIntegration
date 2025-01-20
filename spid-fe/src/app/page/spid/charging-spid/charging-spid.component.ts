@@ -4,12 +4,12 @@ import {environment} from '../../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-charging',
+  selector: 'app-charging-spid',
   imports: [],
-  templateUrl: './charging.component.html',
-  styleUrl: './charging.component.css'
+  templateUrl: './charging-spid.component.html',
+  styleUrl: './charging-spid.component.css'
 })
-export class ChargingComponent implements OnInit {
+export class ChargingSpidComponent implements OnInit {
 
   private readonly idp: string
 
