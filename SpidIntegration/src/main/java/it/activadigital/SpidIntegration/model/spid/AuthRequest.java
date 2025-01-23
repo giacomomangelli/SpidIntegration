@@ -13,7 +13,7 @@ import lombok.*;
 public class AuthRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String esito;
     @Column(name = "issue_istant")

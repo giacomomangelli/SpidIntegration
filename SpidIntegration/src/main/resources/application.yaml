@@ -7,9 +7,9 @@ spring:
       spec: "maximumSize=1000,expireAfterAccess=900s"
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/spid
-    username: postgres
-    password: root
+    url: jdbc:postgresql://localhost:5432/spid_data
+    username: spid_user
+    password: spid_password
   jpa:
     hibernate:
       ddl-auto: update
