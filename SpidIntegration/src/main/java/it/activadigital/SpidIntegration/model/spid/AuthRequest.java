@@ -25,5 +25,7 @@ public class AuthRequest {
     @Column(name = "sso_request")
     @Lob
     private String ssoRequest;
+    @Column(name = "msg_errore")
+    private String msgError;
 
 }

@@ -51,7 +51,7 @@ public class SpidController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @PostMapping("/assertionconsumer")
+    @PostMapping("/callbackLogin")
     public ResponseEntity<Void> callbackAssertion(@RequestParam String samlResponse) {
         AssertionSpidResponse assertion = assertionService.checkSpidAssertion(samlResponse);
         cacheService.setSpidCachedData(assertion.getResponseId(), assertion);

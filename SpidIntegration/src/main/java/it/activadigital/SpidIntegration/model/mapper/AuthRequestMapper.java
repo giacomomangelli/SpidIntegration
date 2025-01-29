@@ -21,7 +21,8 @@ public class AuthRequestMapper {
                 authRequest.getIssueIstant(),
                 authRequest.getUuid(),
                 authRequest.getB64RequestComp(),
-                authRequest.getSsoRequest()
+                authRequest.getSsoRequest(),
+                authRequest.getMsgError()
         );
     }
 
