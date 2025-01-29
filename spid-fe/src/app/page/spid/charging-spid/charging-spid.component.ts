@@ -22,14 +22,13 @@ export class ChargingSpidComponent implements OnInit {
     console.log(this.idp);
     this.spidService.getMetadata(environment.client_id).subscribe({
       next: data => {
-        console.log(data);
+        console.log("METADATA: ", data);
         this.spidService.getAuthRequest(environment.client_id, this.idp).subscribe({
-          next: data => {
-            console.log(data);
-            window.open(data.ssoRequest, "", "width=1000,height=1000");
+          next: ssoData => {
+            window.open(ssoData.sso_request, "_self");
           },
           error: () => {
-            console.log(data);
+            console.log("error", data);
           },
           complete: () => {
             console.log("Redirecting...");

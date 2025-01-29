@@ -21,7 +21,8 @@ export class SpidService {
 
   public getAuthRequest(clientId: string, idp: string): Observable<AuthResponse> {
     console.log('Get Auth Request');
-    return this.http.get<AuthResponse>(`${this.BASE_URL}?clientId=${clientId}&idp=${idp}`);
+    return this.http.get<AuthResponse>(`${this.BASE_URL}/auth-request?clientId=${clientId}&idp=${idp}`);
+
   }
 
   public checkSessionArrived(clientId: string, idp: string): Observable<AuthResponse> {

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {SpidService} from '../../../service/spid.service';
 import {CieService} from '../../../service/cie.service';
-import {environment} from '../../../../environments/environment';
 import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
+import {environment} from '../../../../environments/environment';
 
 declare var SPID: any;
 
@@ -17,8 +17,6 @@ declare var SPID: any;
 })
 export class LoginComponent implements OnInit {
 
-  test = 'ciao';
-
   constructor(private readonly spidService: SpidService,
               private readonly cieService: CieService,
               private readonly router: Router,) {
@@ -30,9 +28,9 @@ export class LoginComponent implements OnInit {
       lang: 'it',
       selector: '#my-spid-button',
       method: "GET",
-      url: "http://localhost:4200/spid/charging/{{idp}}",
+      url: "http://localhost:4200/spid/charging-spid/{{idp}}",
       mapping: {
-        'https://loginspid.aruba.it': 'aruba',
+        'https://loginspid.aruba.it': 'arubaid',
         'https://posteid.poste.it': 'poste',
         'https://idp.namirialtsp.com/idp': 'tsp',
         'https://identity.sieltecloud.it': 'sitelcloud',
@@ -58,7 +56,7 @@ export class LoginComponent implements OnInit {
   }
 
   cieConnect(): void {
-    this.router.navigate(['/spid/charging-cie']);
+    this.router.navigate(['/spid/charging-cie']).then();
   }
 
 }
