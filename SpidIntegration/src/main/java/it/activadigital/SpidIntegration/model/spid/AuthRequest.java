@@ -20,8 +20,10 @@ public class AuthRequest {
     private String issueIstant;
     private String uuid;
     @Column(name = "b64_request_comp")
+    @Lob
     private String b64RequestComp;
     @Column(name = "sso_request")
+    @Lob
     private String ssoRequest;
 
 }

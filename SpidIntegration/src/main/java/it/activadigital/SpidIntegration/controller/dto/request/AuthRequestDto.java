@@ -10,6 +10,8 @@ public record AuthRequestDto(
         @JsonProperty(value = "b64_request_comp")
         String b64RequestComp,
         @JsonProperty(value = "sso_request")
-        String ssoRequest
-        ) {
+        String ssoRequest,
+        @JsonProperty(value = "msg_errore")
+        String msgError
+) {
 }

@@ -47,6 +47,7 @@ public class SpidController {
         AuthRequestDto responseDto = spidService.getAuthRequest(idpDto);
         spidService.saveAuthRequest(AuthRequestMapper.dtoToModel(responseDto));
         cacheService.setSpidCachedData(responseDto.uuid(), new AssertionSpidResponse());
+        log.debug(responseDto.toString());
         return ResponseEntity.ok(responseDto);
     }
 
