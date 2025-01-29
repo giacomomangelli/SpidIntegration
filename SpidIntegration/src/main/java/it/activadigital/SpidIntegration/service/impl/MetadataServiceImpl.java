@@ -25,9 +25,10 @@ public class MetadataServiceImpl implements MetadataService {
         ResponseEntity<MetadataResponseDto> responseDto = RestClient
                 .create()
                 .get()
-                .uri(Constant.SPID_BASE_URL.getDescription() + "/get_metadata?client_id=" + clientId)
+                .uri(Constant.SPID_BASE_URL.getDescription() + "/get_metadata?client_id=" + clientId.trim())
                 .headers(httpHeaders -> {
                     httpHeaders.addAll(util.setHeaders());
+                    log.info("getSpidMetadata headers {}", httpHeaders);
                 })
                 .retrieve()
                 .toEntity(MetadataResponseDto.class);

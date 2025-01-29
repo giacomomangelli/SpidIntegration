@@ -42,7 +42,7 @@ chmod +x spid-deploy/jdk/jdk-21/bin/java
     spid-deploy/jdk/jdk-21/bin/java -Dspring.config.location=$1 -jar spid-deploy/jdk/jdk-21/SpidIntegration.jar > todelete.log &
   else
     echo "Avvio SpidIntegration con file di configurazione di default"
-    spid-deploy/jdk/jdk-21/bin/java -jar spid-deploy/jdk/jdk-21/SpidIntegration.jar > todelete.log &
+    /root/spid-cie/build/spid-deploy/jdk/jdk-21/bin/java -jar /root/spid-cie/build/spid-deploy/spid-deploy/jdk/jdk-21/SpidIntegration.jar > todelete.log &
   fi
 
 sleep 2
