@@ -35,4 +35,8 @@ export class SpidService {
     return obv;
   }
 
+  public test() {
+    return this.http.get(environment.url + '/redirect');
+  }
+
 }

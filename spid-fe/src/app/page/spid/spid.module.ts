@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { SpidRoutingModule } from './spid-routing.module';
+import {SpidRoutingModule} from './spid-routing.module';
 
 
 @NgModule({
@@ -11,4 +11,5 @@ import { SpidRoutingModule } from './spid-routing.module';
     SpidRoutingModule
   ]
 })
-export class SpidModule { }
+export class SpidModule {
+}

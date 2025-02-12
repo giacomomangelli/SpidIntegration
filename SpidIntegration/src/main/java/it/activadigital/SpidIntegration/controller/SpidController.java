@@ -29,9 +29,9 @@ public class SpidController {
     @Autowired
     private MetadataService metadataService;
     @Autowired
-    private RequestUtil util;
-    @Autowired
     private CacheService cacheService;
+    @Autowired
+    private RequestUtil util;
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/metadata")
@@ -51,13 +51,8 @@ public class SpidController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @PostMapping("/callbackLogin")
-    public ResponseEntity<Void> callbackAssertion(@RequestParam String samlResponse) {
-        AssertionSpidResponse assertion = assertionService.checkSpidAssertion(samlResponse);
-        cacheService.setSpidCachedData(assertion.getResponseId(), assertion);
-        return ResponseEntity.ok().build();
-    }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/getAuthData")
     public ResponseEntity<AssertionSpidResponse> getAuthData(@RequestParam String uuid) {
         AssertionSpidResponse assertion = cacheService.getSpidCachedData(uuid);
@@ -72,6 +67,7 @@ public class SpidController {
     public ResponseEntity<String> generateToken() {
         return ResponseEntity.ok(util.generateToken());
     }
+
 }
 
 

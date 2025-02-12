@@ -3,7 +3,6 @@ import {SpidService} from '../../../service/spid.service';
 import {CieService} from '../../../service/cie.service';
 import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
-import {environment} from '../../../../environments/environment';
 
 declare var SPID: any;
 
@@ -56,7 +55,11 @@ export class LoginComponent implements OnInit {
   }
 
   cieConnect(): void {
-    this.router.navigate(['/spid/charging-cie']).then();
+    // this.router.navigate(['/spid/charging-cie']).then();
+    window.open("http://localhost:8080/spid/test2", "_self");
+    // this.spidService.test().subscribe(t => {
+    //   console.log(t);
+    // })
   }
 
 }
