@@ -29,7 +29,7 @@ public class CallbackController {
         redirectToFrontend(assertion.getResponseId());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200, http://")
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/redirect/{dataId}")
     public RedirectView redirectToFrontend(@PathVariable String dataId) {
         RedirectView redirectView = new RedirectView();
