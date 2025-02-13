@@ -20,7 +20,7 @@ const routes: Routes = [
     component: ChargingCieComponent,
   },
   {
-    path: 'done',
+    path: 'done/:dataId',
     component: DoneComponent,
   },
   {
