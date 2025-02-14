@@ -4,11 +4,9 @@ import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidRes
 import it.activadigital.SpidIntegration.service.AssertionService;
 import it.activadigital.SpidIntegration.service.CacheService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
