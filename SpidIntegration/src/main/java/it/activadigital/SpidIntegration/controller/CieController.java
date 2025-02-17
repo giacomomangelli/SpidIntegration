@@ -3,6 +3,7 @@ package it.activadigital.SpidIntegration.controller;
 import it.activadigital.SpidIntegration.controller.dto.request.AuthRequestDto;
 import it.activadigital.SpidIntegration.controller.dto.response.AssertionCieResponse;
 import it.activadigital.SpidIntegration.controller.dto.response.MetadataResponseDto;
+import it.activadigital.SpidIntegration.controller.mapper.CallbackMapper;
 import it.activadigital.SpidIntegration.model.mapper.AuthRequestMapper;
 import it.activadigital.SpidIntegration.service.AssertionService;
 import it.activadigital.SpidIntegration.service.CacheService;
@@ -36,22 +37,12 @@ public class CieController {
     public ResponseEntity<AuthRequestDto> getAuthRequest(@RequestParam String clientId) {
         AuthRequestDto responseDto = cieService.getAuthRequest(clientId);
         cieService.saveAuthRequest(AuthRequestMapper.dtoToModel(responseDto));
-        cacheService.setCieCachedData(responseDto.uuid(), new AssertionCieResponse());
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/getAuthData")
-    public ResponseEntity<AssertionCieResponse> getAuthData(@RequestParam String uuid) {
-        AssertionCieResponse assertion = cacheService.getCieCachedData(uuid);
-        if (assertion == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(assertion);
-    }
-
-    @PostMapping("/assertionconsumer")
-    public ResponseEntity<AssertionCieResponse> postAssertionConsumer(@RequestParam String samlResponse) {
-        AssertionCieResponse assertion = assertionService.checkCieAssertion(samlResponse);
+    @PostMapping("/callbackLogin")
+    public ResponseEntity<AssertionCieResponse> postAssertionConsumer(@RequestBody String samlResponse) {
+        AssertionCieResponse assertion = assertionService.checkCieAssertion(CallbackMapper.mapToEntryDto(samlResponse));
         cacheService.setCieCachedData(assertion.getResponseId(), assertion);
         return ResponseEntity.ok().build();
     }

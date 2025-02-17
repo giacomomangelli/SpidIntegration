@@ -1,6 +1,9 @@
 package it.activadigital.SpidIntegration.controller;
 
+import it.activadigital.SpidIntegration.controller.dto.request.AssertionRequestDto;
 import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidResponse;
+import it.activadigital.SpidIntegration.controller.mapper.CallbackMapper;
+import it.activadigital.SpidIntegration.enumeration.Constant;
 import it.activadigital.SpidIntegration.service.AssertionService;
 import it.activadigital.SpidIntegration.service.CacheService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +21,12 @@ public class CallbackController {
     @Autowired
     private CacheService cacheService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://loginspid.aruba.it")
     @PostMapping("/callbackLogin")
-    public void callbackAssertion(@RequestParam String samlResponse) {
+    public void callbackAssertion(@RequestBody String samlResponse) {
         log.info("SAML Response: {}", samlResponse);
-        AssertionSpidResponse assertion = assertionService.checkSpidAssertion(samlResponse);
+        AssertionRequestDto assertionRequestDto = CallbackMapper.mapToEntryDto(samlResponse);
+        AssertionSpidResponse assertion = assertionService.checkSpidAssertion(assertionRequestDto);
         cacheService.setSpidCachedData(assertion.getResponseId(), assertion);
         redirectToFrontend(assertion.getResponseId());
     }
@@ -31,10 +35,7 @@ public class CallbackController {
     @GetMapping("/redirect/{dataId}")
     public RedirectView redirectToFrontend(@PathVariable String dataId) {
         RedirectView redirectView = new RedirectView();
-        AssertionSpidResponse test = new AssertionSpidResponse();
-        test.setResponseId(dataId);
-        cacheService.setSpidCachedData(dataId, test);
-        redirectView.setUrl("http://localhost:4200/spid/done/" + dataId);
+        redirectView.setUrl(Constant.FRONTEND_URL.getDescription() + dataId);
         return redirectView;
     }
 

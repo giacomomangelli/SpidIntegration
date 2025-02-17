@@ -2,14 +2,11 @@ package it.activadigital.SpidIntegration.controller;
 
 import it.activadigital.SpidIntegration.controller.dto.request.AuthRequestDto;
 import it.activadigital.SpidIntegration.controller.dto.request.IdpRequestDto;
-import it.activadigital.SpidIntegration.controller.dto.response.AssertionSpidResponse;
 import it.activadigital.SpidIntegration.controller.dto.response.MetadataResponseDto;
 import it.activadigital.SpidIntegration.model.mapper.AuthRequestMapper;
 import it.activadigital.SpidIntegration.service.AssertionService;
-import it.activadigital.SpidIntegration.service.CacheService;
 import it.activadigital.SpidIntegration.service.MetadataService;
 import it.activadigital.SpidIntegration.service.SpidService;
-import it.activadigital.SpidIntegration.util.RequestUtil;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +25,6 @@ public class SpidController {
     private AssertionService assertionService;
     @Autowired
     private MetadataService metadataService;
-    @Autowired
-    private CacheService cacheService;
-    @Autowired
-    private RequestUtil util;
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/metadata")
@@ -46,26 +39,8 @@ public class SpidController {
         IdpRequestDto idpDto = new IdpRequestDto(clientId, idp);
         AuthRequestDto responseDto = spidService.getAuthRequest(idpDto);
         spidService.saveAuthRequest(AuthRequestMapper.dtoToModel(responseDto));
-        cacheService.setSpidCachedData(responseDto.uuid(), new AssertionSpidResponse());
-        log.debug(responseDto.toString());
+        log.info(responseDto.toString());
         return ResponseEntity.ok(responseDto);
-    }
-
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/getAuthData")
-    public ResponseEntity<AssertionSpidResponse> getAuthData(@RequestParam String uuid) {
-        AssertionSpidResponse assertion = cacheService.getSpidCachedData(uuid);
-        if (assertion == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(assertion);
-    }
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/generate-token")
-    public ResponseEntity<String> generateToken() {
-        return ResponseEntity.ok(util.generateToken());
     }
 
 }

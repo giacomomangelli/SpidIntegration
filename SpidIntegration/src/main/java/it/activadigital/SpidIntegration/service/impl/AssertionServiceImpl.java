@@ -8,45 +8,58 @@ import it.activadigital.SpidIntegration.service.AssertionService;
 import it.activadigital.SpidIntegration.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
-@Service
+
 @Slf4j
+@Service
 public class AssertionServiceImpl implements AssertionService {
 
     @Autowired
     private RequestUtil util;
+    @Value("${deda-client.client_id}")
+    private String clientId;
 
     @Override
-    public AssertionSpidResponse checkSpidAssertion(String xmlAuthResponse) {
-        log.info("Check SpidAssertion xmlAuthResponse: {}", xmlAuthResponse);
-        AssertionRequestDto request = new AssertionRequestDto("", xmlAuthResponse);
-        ResponseEntity<AssertionSpidResponse> responseDto = RestClient
+    public AssertionSpidResponse checkSpidAssertion(AssertionRequestDto assertionRequestDto) {
+        log.info("Check SpidAssertion xmlAuthResponse: {}", assertionRequestDto);
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("client_id", clientId.trim());
+        map.add("assertion", assertionRequestDto.samlResponse());
+        ResponseEntity<AssertionSpidResponse> response = RestClient
                 .create()
                 .post()
                 .uri(Constant.SPID_BASE_URL.getDescription() + "/check_assertion")
                 .headers(httpHeaders -> {
                     httpHeaders.addAll(util.setHeaders());
                 })
-                .body(request)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .body(map)
                 .retrieve()
                 .toEntity(AssertionSpidResponse.class);
-        if (responseDto.getStatusCode() != HttpStatus.OK) {
-            log.error("checkAssertion SPID returned status code {}", responseDto.getStatusCode());
-            throw new RestClientException("Error in response from SPID assertion request request: " + responseDto.getStatusCode());
+        if (response.getStatusCode() != HttpStatus.OK ||
+                (response.getBody() != null && response.getBody().getEsito().equals("ko"))) {
+            log.error("checkAssertion SPID returned status code {} and body {}", response.getStatusCode(), response.getBody());
+            throw new RestClientException("Error in response from SPID assertion request " + response.getStatusCode() + " with body " + response.getBody());
         }
-        return responseDto.getBody();
+        log.info("Check SpidAssertion returned: {}", response.getBody());
+        return response.getBody();
     }
 
     @Override
-    public AssertionCieResponse checkCieAssertion(String xmlAuthResponse) {
-        log.info("Check CieAssertion xmlAuthResponse: {}", xmlAuthResponse);
-        AssertionRequestDto request = new AssertionRequestDto("", xmlAuthResponse);
+    public AssertionCieResponse checkCieAssertion(AssertionRequestDto assertionRequestDto) {
+        log.info("Check CieAssertion xmlAuthResponse: {}", assertionRequestDto);
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("client_id", clientId);
+        map.add("assertion", assertionRequestDto.samlResponse());
         ResponseEntity<AssertionCieResponse> responseDto = RestClient
                 .create()
                 .post()
@@ -55,12 +68,13 @@ public class AssertionServiceImpl implements AssertionService {
                     httpHeaders.addAll(util.setHeaders());
                 })
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .body(request)
+                .body(map)
                 .retrieve()
                 .toEntity(AssertionCieResponse.class);
-        if (responseDto.getStatusCode() != HttpStatus.OK) {
-            log.error("checkAssertion CIE returned status code {}", responseDto.getStatusCode());
-            throw new RestClientException("Error in response from CIE assertion request request: " + responseDto.getStatusCode());
+        if (responseDto.getStatusCode() != HttpStatus.OK ||
+                (responseDto.getBody() != null && responseDto.getBody().getEsito().equals("ko"))) {
+            log.error("checkAssertion CIE returned status code {} and body {}", responseDto.getStatusCode(), responseDto.getBody());
+            throw new RestClientException("Error in response from CIE assertion request: " + responseDto.getStatusCode() + " with body " + responseDto.getBody());
         }
         return responseDto.getBody();
     }
