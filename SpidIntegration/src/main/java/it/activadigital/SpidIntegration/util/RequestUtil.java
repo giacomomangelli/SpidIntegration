@@ -41,7 +41,7 @@ public class RequestUtil {
         MultiValueMap<String, String> multiHeaders = new LinkedMultiValueMap<>();
         multiHeaders.add("Authorization", "Bearer " + generateToken());
         multiHeaders.add("Accept", "application/json");
-        multiHeaders.add("Accept-Encoding", "gzip, deflate, br");
+        multiHeaders.add("Accept-Encoding", "gzip, deflate, br, utf-8");
         multiHeaders.add("Connection", "keep-alive");
         log.debug("HEADERS {}", multiHeaders);
         return multiHeaders;

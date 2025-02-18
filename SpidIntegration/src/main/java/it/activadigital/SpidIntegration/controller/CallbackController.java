@@ -8,7 +8,9 @@ import it.activadigital.SpidIntegration.service.AssertionService;
 import it.activadigital.SpidIntegration.service.CacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -22,20 +24,16 @@ public class CallbackController {
     private CacheService cacheService;
 
     @CrossOrigin(origins = "https://loginspid.aruba.it")
-    @PostMapping("/callbackLogin")
-    public void callbackAssertion(@RequestBody String samlResponse) {
-        log.info("SAML Response: {}", samlResponse);
-        AssertionRequestDto assertionRequestDto = CallbackMapper.mapToEntryDto(samlResponse);
+    @PostMapping(value = "/callbackLogin", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public RedirectView callbackAssertion(@RequestParam MultiValueMap<String,String> responseMap) {
+        log.info("SAML Response: {}", responseMap);
+        AssertionRequestDto assertionRequestDto = CallbackMapper.mapToEntryDto(responseMap);
         AssertionSpidResponse assertion = assertionService.checkSpidAssertion(assertionRequestDto);
         cacheService.setSpidCachedData(assertion.getResponseId(), assertion);
-        redirectToFrontend(assertion.getResponseId());
-    }
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/redirect/{dataId}")
-    public RedirectView redirectToFrontend(@PathVariable String dataId) {
+        log.info("redirectToFrontend: {}", assertion.getResponseId());
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(Constant.FRONTEND_URL.getDescription() + dataId);
+        redirectView.setUrl(Constant.FRONTEND_URL.getDescription() + assertion.getResponseId());
+        log.info("redirectURL: {}", redirectView.getUrl());
         return redirectView;
     }
 

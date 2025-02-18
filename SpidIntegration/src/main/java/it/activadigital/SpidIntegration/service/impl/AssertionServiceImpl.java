@@ -33,7 +33,7 @@ public class AssertionServiceImpl implements AssertionService {
         log.info("Check SpidAssertion xmlAuthResponse: {}", assertionRequestDto);
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("client_id", clientId.trim());
-        map.add("assertion", assertionRequestDto.samlResponse());
+        map.add("assertion", assertionRequestDto.samlResponse().trim());
         ResponseEntity<AssertionSpidResponse> response = RestClient
                 .create()
                 .post()
@@ -59,7 +59,7 @@ public class AssertionServiceImpl implements AssertionService {
         log.info("Check CieAssertion xmlAuthResponse: {}", assertionRequestDto);
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("client_id", clientId);
-        map.add("assertion", assertionRequestDto.samlResponse());
+        map.add("assertion", assertionRequestDto.samlResponse().trim());
         ResponseEntity<AssertionCieResponse> responseDto = RestClient
                 .create()
                 .post()

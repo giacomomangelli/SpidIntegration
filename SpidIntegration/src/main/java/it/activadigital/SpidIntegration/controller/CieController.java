@@ -10,7 +10,9 @@ import it.activadigital.SpidIntegration.service.CacheService;
 import it.activadigital.SpidIntegration.service.CieService;
 import it.activadigital.SpidIntegration.service.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/cie")
@@ -40,11 +42,10 @@ public class CieController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @PostMapping("/callbackLogin")
-    public ResponseEntity<AssertionCieResponse> postAssertionConsumer(@RequestBody String samlResponse) {
-        AssertionCieResponse assertion = assertionService.checkCieAssertion(CallbackMapper.mapToEntryDto(samlResponse));
+    @PostMapping(value = "/callbackLogin", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public void callbackAssertion(@RequestParam MultiValueMap<String,String> responseMap) {
+        AssertionCieResponse assertion = assertionService.checkCieAssertion(CallbackMapper.mapToEntryDto(responseMap));
         cacheService.setCieCachedData(assertion.getResponseId(), assertion);
-        return ResponseEntity.ok().build();
     }
 
 }
