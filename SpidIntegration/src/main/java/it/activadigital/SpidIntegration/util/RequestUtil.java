@@ -65,4 +65,11 @@ public class RequestUtil {
     public AssertionSpidResponse extractJsonResponse(String uuid, AssertionSpidResponse body) {
         return body;
     }
+
+    public static String parseFiscalNumber(String fiscalNumber) {
+        if (fiscalNumber == null) {
+            return null;
+        }
+        return fiscalNumber.substring(fiscalNumber.indexOf("-") + 1).toUpperCase();
+    }
 }

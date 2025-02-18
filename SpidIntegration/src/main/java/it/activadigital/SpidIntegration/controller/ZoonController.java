@@ -24,7 +24,11 @@ public class ZoonController {
 
     @GetMapping("/users/{username}")
     public ResponseEntity<ZoonUserResponseDto> getUser(@PathVariable String username) {
-        return ResponseEntity.ok(zoonService.getZoonUser(username));
+        ZoonUserResponseDto userResponseDto = zoonService.getZoonUser(username);
+        if (userResponseDto != null) {
+            return ResponseEntity.ok(userResponseDto);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/users")

@@ -6,6 +6,7 @@ import it.activadigital.SpidIntegration.controller.mapper.CallbackMapper;
 import it.activadigital.SpidIntegration.enumeration.Constant;
 import it.activadigital.SpidIntegration.service.AssertionService;
 import it.activadigital.SpidIntegration.service.CacheService;
+import it.activadigital.SpidIntegration.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,17 +24,18 @@ public class CallbackController {
     @Autowired
     private CacheService cacheService;
 
-    @CrossOrigin(origins = "https://loginspid.aruba.it")
+    @CrossOrigin(origins =
+            "https://loginspid.aruba.it, https://identity.sieltecloud.it")
     @PostMapping(value = "/callbackLogin", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public RedirectView callbackAssertion(@RequestParam MultiValueMap<String,String> responseMap) {
         log.info("SAML Response: {}", responseMap);
         AssertionRequestDto assertionRequestDto = CallbackMapper.mapToEntryDto(responseMap);
         AssertionSpidResponse assertion = assertionService.checkSpidAssertion(assertionRequestDto);
+        assertion.getAttributiUtente().setFiscalNumber(RequestUtil.parseFiscalNumber(assertion.getAttributiUtente().getFiscalNumber()));
         cacheService.setSpidCachedData(assertion.getResponseId(), assertion);
-        log.info("redirectToFrontend: {}", assertion.getResponseId());
+
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(Constant.FRONTEND_URL.getDescription() + assertion.getResponseId());
-        log.info("redirectURL: {}", redirectView.getUrl());
         return redirectView;
     }
 

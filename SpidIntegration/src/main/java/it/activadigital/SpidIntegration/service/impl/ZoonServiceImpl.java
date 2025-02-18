@@ -22,7 +22,7 @@ public class ZoonServiceImpl implements ZoonService {
 
     @Override
     public ZoonUserResponseDto getZoonUser(String username) {
-        return ZoonUserMapper.mapToDto(zoonUserRepository.findByUsername(username));
+        return ZoonUserMapper.mapToDto(zoonUserRepository.findByUsername(username).orElse(null));
     }
 
     @Override
@@ -32,7 +32,10 @@ public class ZoonServiceImpl implements ZoonService {
 
     @Override
     public void updateZoonUserPwd(ZoonUserRequestDto zoonDto) {
-        ZoonUser zoonUser = zoonUserRepository.findByUsername(zoonDto.username());
+        ZoonUser zoonUser = zoonUserRepository.findByUsername(zoonDto.username()).orElse(null);
+        if (zoonUser == null) {
+            return;
+        }
         zoonUser.setPassword(zoonDto.password());
         zoonUserRepository.save(zoonUser);
     }

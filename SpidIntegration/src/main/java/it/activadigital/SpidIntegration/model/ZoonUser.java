@@ -15,8 +15,9 @@ public class ZoonUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String username;
     private String password;
-    @Column(unique = true, name = "codice_spid")
+    @Column(name = "codice_spid")
     private String codiceSpid;
 }

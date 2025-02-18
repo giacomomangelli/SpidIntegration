@@ -15,6 +15,9 @@ public class ZoonUserMapper {
     }
 
     public static ZoonUserResponseDto mapToDto(ZoonUser zoonUser) {
+        if (zoonUser == null) {
+            return null;
+        }
         return ZoonUserResponseDto.builder()
                 .id(zoonUser.getId())
                 .username(zoonUser.getUsername())
