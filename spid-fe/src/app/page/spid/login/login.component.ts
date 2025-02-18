@@ -31,11 +31,11 @@ export class LoginComponent implements OnInit {
       mapping: {
         'https://loginspid.aruba.it': 'arubaid',
         'https://posteid.poste.it': 'poste',
-        'https://idp.namirialtsp.com/idp': 'tsp',
-        'https://identity.sieltecloud.it': 'sitelcloud',
+        'https://idp.namirialtsp.com/idp': 'namirialid',
+        'https://identity.sieltecloud.it': 'sielte',
         'https://identity.infocert.it': 'infocert',
         'https://login.id.tim.it/affwebservices/public/saml2sso': 'tim',
-        'https://spid.register.it': 'register',
+        'https://spid.register.it': 'spiditalia',
         'https://spid.intesa.it': 'intesa',
         'https://id.lepida.it/idp/shibboleth': 'lepida'
       },
