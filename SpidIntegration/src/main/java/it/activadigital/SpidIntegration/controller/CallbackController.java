@@ -24,10 +24,17 @@ public class CallbackController {
     @Autowired
     private CacheService cacheService;
 
-    @CrossOrigin(origins =
-            {"https://loginspid.aruba.it, https://identity.sieltecloud.it"})
+    @CrossOrigin(origins = {"https://identity.sieltecloud.it, " +
+            "https://loginspid.aruba.it, " +
+            "https://posteid.poste.it, " +
+            "https://idp.namirialtsp.com/idp, " +
+            "https://identity.infocert.it, " +
+            "https://login.id.tim.it/affwebservices/public/saml2sso, " +
+            "https://spid.register.it, " +
+            "https://spid.intesa.it, " +
+            "https://id.lepida.it/idp/shibboleth"})
     @PostMapping(value = "/callbackLogin", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public RedirectView callbackAssertion(@RequestParam MultiValueMap<String,String> responseMap) {
+    public RedirectView callbackAssertion(@RequestParam MultiValueMap<String, String> responseMap) {
         log.info("SAML Response: {}", responseMap);
         AssertionRequestDto assertionRequestDto = CallbackMapper.mapToEntryDto(responseMap);
         AssertionSpidResponse assertion = assertionService.checkSpidAssertion(assertionRequestDto);
