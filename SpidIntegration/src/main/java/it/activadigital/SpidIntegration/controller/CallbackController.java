@@ -25,7 +25,7 @@ public class CallbackController {
     private CacheService cacheService;
 
     @CrossOrigin(origins =
-            "https://loginspid.aruba.it, https://identity.sieltecloud.it")
+            {"https://loginspid.aruba.it, https://identity.sieltecloud.it"})
     @PostMapping(value = "/callbackLogin", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public RedirectView callbackAssertion(@RequestParam MultiValueMap<String,String> responseMap) {
         log.info("SAML Response: {}", responseMap);
@@ -39,7 +39,7 @@ public class CallbackController {
         return redirectView;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
     @GetMapping("/retrieve-data/{dataId}")
     public ResponseEntity<AssertionSpidResponse> retrieveData(@PathVariable String dataId) {
         return ResponseEntity.ok(cacheService.getSpidCachedData(dataId));

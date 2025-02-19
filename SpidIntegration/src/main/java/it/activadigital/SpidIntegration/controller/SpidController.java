@@ -26,14 +26,14 @@ public class SpidController {
     @Autowired
     private MetadataService metadataService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
     @GetMapping("/metadata")
     public ResponseEntity<MetadataResponseDto> getMetadataSpid(@RequestParam String clientId) {
         MetadataResponseDto dto = metadataService.getSpidMetadata(clientId);
         return ResponseEntity.ok(dto);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
     @GetMapping("/auth-request")
     public ResponseEntity<AuthRequestDto> getAuthRequest(@RequestParam String clientId, @RequestParam String idp) {
         IdpRequestDto idpDto = new IdpRequestDto(clientId, idp);

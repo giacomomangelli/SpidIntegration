@@ -28,13 +28,14 @@ public class CieController {
     @Autowired
     private CacheService cacheService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
     @GetMapping("/metadata")
     public ResponseEntity<MetadataResponseDto> getMetadataCie(@RequestParam String clientId) {
         MetadataResponseDto dto = metadataService.getCieMetadata(clientId);
         return ResponseEntity.ok(dto);
     }
 
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
     @GetMapping("/auth-request")
     public ResponseEntity<AuthRequestDto> getAuthRequest(@RequestParam String clientId) {
         AuthRequestDto responseDto = cieService.getAuthRequest(clientId);

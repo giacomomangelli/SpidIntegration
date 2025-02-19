@@ -17,11 +17,13 @@ public class ZoonController {
     @Autowired
     private ZoonService zoonService;
 
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
     @GetMapping("/users")
     public ResponseEntity<List<ZoonUserResponseDto>> getUsers() {
         return ResponseEntity.ok(zoonService.listZoonUser());
     }
 
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
     @GetMapping("/users/{username}")
     public ResponseEntity<ZoonUserResponseDto> getUser(@PathVariable String username) {
         ZoonUserResponseDto userResponseDto = zoonService.getZoonUser(username);
@@ -31,12 +33,14 @@ public class ZoonController {
         return ResponseEntity.notFound().build();
     }
 
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
     @PostMapping("/users")
     public ResponseEntity<Void> addZoonUser(@RequestBody ZoonUserRequestDto zoonUserRequestDto) {
         zoonService.addZoonUser(zoonUserRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
     @PutMapping("/users")
     public ResponseEntity<Void> updateZoonUserPassword(@RequestBody ZoonUserRequestDto zoonUserRequestDto) {
         zoonService.updateZoonUserPwd(zoonUserRequestDto);
