@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface ZoonUserRepository extends JpaRepository<ZoonUser, Long> {
     Optional<ZoonUser> findByUsername(String username);
+    void deleteByUsername(String username);
 }

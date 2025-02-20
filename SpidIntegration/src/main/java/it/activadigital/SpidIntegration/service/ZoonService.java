@@ -15,5 +15,6 @@ public interface ZoonService {
 
     List<ZoonUserResponseDto> listZoonUser();
 
+    void deleteZoonUser(String username);
 
 }

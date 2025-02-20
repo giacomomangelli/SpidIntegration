@@ -47,5 +47,12 @@ public class ZoonController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @CrossOrigin(origins = {"http://localhost:4200, http://localhost:4201"})
+    @DeleteMapping("/users/{username}")
+    public ResponseEntity<Void> deleteZoonUser(@PathVariable String username) {
+        zoonService.deleteZoonUser(username);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 
 }

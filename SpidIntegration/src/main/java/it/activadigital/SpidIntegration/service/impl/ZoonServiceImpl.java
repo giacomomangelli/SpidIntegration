@@ -44,4 +44,11 @@ public class ZoonServiceImpl implements ZoonService {
     public void addZoonUser(ZoonUserRequestDto zoonDto) {
         zoonUserRepository.save(ZoonUserMapper.mapToEntity(zoonDto));
     }
+
+    @Override
+    public void deleteZoonUser(String username) {
+        zoonUserRepository.deleteByUsername(username);
+    }
+
+
 }
